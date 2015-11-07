@@ -1,0 +1,83 @@
+- hosts: all
+
+  tasks:
+    - name: Install workstation packages
+      become: yes
+      tags: ["apt"]
+      apt:
+          name: "{{ item }}"
+          update_cache: yes
+          state: latest
+          force: yes
+      with_items:
+        - vim
+        - git
+        - zsh
+        - htop
+        - curl
+        - wget
+        # - tar
+        # - unzip
+        # - python
+
+    - name: Install server packages
+      become: yes
+      tags: ["apt"]
+      apt:
+          name: "{{ item }}"
+          update_cache: yes
+          state: latest
+          force: yes
+      with_items:
+        - fail2ban
+
+    - name: NOPASSWD for sudo group
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%SUDO ALL\='
+        line: '%SUDO ALL=(ALL) NOPASSWD:ALL'
+        validate: 'visudo -cf %s'
+
+    - name: Create user
+      become: yes
+      user:
+        name: "{{ username }}"
+        groups: sudo
+        shell: /bin/zsh
+
+    - name: Add SSH key into nla authorized_keys
+      become_method: su
+      become_user: "{{ username }}"
+      authorized_key:
+          user: "{{ username }}"
+          key: https://github.com/landier.keys
+
+    - name: Git clone Prezto
+      become: yes
+      become_method: su
+      become_user: "{{ username }}"
+      git:
+          repo: https://github.com/sorin-ionescu/prezto.git
+          dest: "/home/{{ username }}/.zprezto"
+
+    - name: Install Prezto
+      become: yes
+      become_method: su
+      become_user: "{{ username }}"
+      script: install_prezto.sh creates="/home/{{ username }}/.zlogin"
+
+    - name: Deploy dotfiles
+      become: yes
+      become_method: su
+      become_user: "{{ username }}"
+      git:
+          repo: "{{ dotfiles_git_repo }}"
+          dest: "/home/{{ username }}/.dotfiles"
+          accept_hostkey: True
+
+    - name: Symlink dotfiles
+      become: yes
+      become_method: su
+      become_user: "{{ username }}"
+      command: "/home/{{ username }}/.dotfiles/link.sh"
