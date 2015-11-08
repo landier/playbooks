@@ -46,13 +46,6 @@
         groups: sudo
         shell: /bin/zsh
 
-    - name: Add SSH key into nla authorized_keys
-      become_method: su
-      become_user: "{{ username }}"
-      authorized_key:
-          user: "{{ username }}"
-          key: https://github.com/landier.keys
-
     - name: Git clone Prezto
       become: yes
       become_method: su
@@ -65,9 +58,18 @@
       become: yes
       become_method: su
       become_user: "{{ username }}"
-      script: install_prezto.sh creates="/home/{{ username }}/.zlogin"
+      file:
+          path: "/home/{{ username }}/.{{ item }}"
+          src: "/home/{{ username }}/.zprezto/runcoms/{{ item }}"
+          state: link
+          owner: "{{ username }}"
+          group: "{{ username }}"
+          mode: 0644
+      with_items:
+          - zlogin
+          - zlogout
 
-    - name: Deploy dotfiles
+    - name: Git clone dotfiles
       become: yes
       become_method: su
       become_user: "{{ username }}"
@@ -81,3 +83,10 @@
       become_method: su
       become_user: "{{ username }}"
       command: "/home/{{ username }}/.dotfiles/link.sh"
+
+    - name: Add SSH public key into user authorized_keys
+    #   become_method: su
+    #   become_user: "{{ username }}"
+      authorized_key:
+          user: "{{ username }}"
+          key: "{{ github_public_keys }}"
