@@ -1,16 +1,6 @@
 - hosts: all
-
-  tasks:
-    - name: Install workstation packages
-      become: yes
-      tags: ["apt"]
-      apt:
-          name: "{{ item }}"
-          update_cache: yes
-          state: latest
-          force: yes
-      with_items:
-        - htop
-        # - tar
-        # - unzip
-        # - python
+  become: yes
+  become_method: sudo
+  roles:
+    - { role: common, tags: [common] }
+    - { role: retropie, tags: [retropie] }

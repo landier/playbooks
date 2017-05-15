@@ -1,0 +1,8 @@
+- name: Install RetroPie packages
+  package:
+      name: "{{ item }}"
+      update_cache: yes
+      state: latest
+      force: yes
+  with_items:
+    - ecm-tools

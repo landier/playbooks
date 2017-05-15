@@ -1,0 +1,10 @@
+- name: Install basic packages
+  packages:
+    name: "{{ item }}"
+  with_items:
+    - htop
+    - iftop
+    - nmon
+    - sysstools
+    - vim
+    - wicd
