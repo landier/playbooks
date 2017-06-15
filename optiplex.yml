@@ -6,3 +6,5 @@
     - { role: hostname, tags: [hostname] }
     - { role: package-upgrade, tags: [upgrade] }
     - { role: common, tags: [common] }
+    - { role: pi-hole, tags: [pi-hole] }
+    - { role: dotfiles, tags: [dotfiles] }

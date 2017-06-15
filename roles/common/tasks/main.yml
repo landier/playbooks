@@ -6,5 +6,6 @@
     - htop
     - iftop
     - nmon
+    - tmux
     - vim
     - wget

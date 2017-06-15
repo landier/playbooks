@@ -1,0 +1,7 @@
+- name: Git clone Pi-Hole
+  git:
+    repo: https://github.com/pi-hole/pi-hole.git
+    dest: /opt/pi-hole
+    accept_hostkey: yes
+    clone: yes
+    update: yes

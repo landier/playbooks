@@ -1,0 +1,8 @@
+- name: Git clone dotfiles
+  become_user: "{{ ansible_user }}"
+  git:
+    repo: "{{ dotfiles_git_repo_url }}"
+    dest: "/home/{{ ansible_user }}/.dotfiles"
+    accept_hostkey: yes
+    clone: yes
+    update: yes
