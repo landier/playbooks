@@ -2,9 +2,12 @@
   become: yes
   become_method: sudo
   gather_facts: yes
+  vars:
+    - username: "{{ ansible_user }}"
   roles:
     - { role: hostname, tags: [hostname] }
     - { role: package-upgrade, tags: [upgrade] }
     - { role: common, tags: [common] }
     - { role: pi-hole, tags: [pi-hole] }
     - { role: dotfiles, tags: [dotfiles] }
+    - { role: ssh-key, tags: [ssh-key] }
