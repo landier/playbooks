@@ -3,4 +3,5 @@
   become_method: sudo
   roles:
     - { role: common, tags: [common] }
+    - { role: wifi, tags: [wifi] }
     - { role: retropie, tags: [retropie] }

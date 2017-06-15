@@ -1,0 +1,12 @@
+- name: Upgrade all packages (CentOS / Red Hat)
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  package:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Upgrade all packages (Ubuntu / Debian)
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  package:
+    upgrade: dist
+    update_cache: yes

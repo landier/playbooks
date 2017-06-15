@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  roles:
+    - { role: hostname, tags: [hostname] }
+    - { role: package-upgrade, tags: [upgrade] }
+    - { role: common, tags: [common] }
