@@ -1,0 +1,2 @@
+pihole_repo_url: https://github.com/pi-hole/pi-hole.git
+pihole_local_path: /opt/pi-hole

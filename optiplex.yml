@@ -13,6 +13,7 @@
     - { role: common, tags: [common] }
     - { role: dotfiles, tags: [dotfiles] }
     - { role: zsh, tags: [zsh] }
+    - { role: prezto, tags: [prezto] }
 
 - hosts: nike
   become: yes
