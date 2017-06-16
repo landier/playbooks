@@ -1,0 +1,13 @@
+- name: "Add {{ username }} user to sudo group"
+  user:
+    name: "{{ username }}"
+    groups: "{{ sudo_group }}"
+    append: yes
+
+- name: No password prompt for sudo group
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: '^%sudo.*'
+    line: '%sudo ALL=(ALL:ALL) NOPASSWD:ALL'
+    state: present
+    validate: 'visudo -cf %s'

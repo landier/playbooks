@@ -1,0 +1,10 @@
+- name: Install ZSH
+  package:
+    name: zsh
+    state: latest
+    
+- name: Configure user shell to be ZSH
+  when: username|default(None) != None
+  user:
+    name: "{{ username }}"
+    shell: "{{ shell }}"

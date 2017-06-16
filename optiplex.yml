@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: optiplex
   become: yes
   become_method: sudo
   gather_facts: yes
@@ -7,7 +7,15 @@
   roles:
     - { role: hostname, tags: [hostname] }
     - { role: package-upgrade, tags: [upgrade] }
-    - { role: common, tags: [common] }
-    - { role: pi-hole, tags: [pi-hole] }
-    - { role: dotfiles, tags: [dotfiles] }
+    - { role: fail2ban, tags: [fail2ban] }
     - { role: ssh-key, tags: [ssh-key] }
+    - { role: sudo, tags: [sudo] }
+    - { role: common, tags: [common] }
+    - { role: dotfiles, tags: [dotfiles] }
+    - { role: zsh, tags: [zsh] }
+
+- hosts: nike
+  become: yes
+  become_method: sudo
+  roles:
+    - { role: pi-hole, tags: [pi-hole] }
