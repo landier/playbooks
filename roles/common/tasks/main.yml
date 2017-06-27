@@ -5,6 +5,8 @@
     - git
     - htop
     - iftop
+    - mosh
+    - nmap
     - nmon
     - tmux
     - vim
