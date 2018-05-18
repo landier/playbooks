@@ -1,7 +1,7 @@
 - name: Add SSH public key into user authorized_keys
   when: username|default(None) != None and github_public_keys_url|default(None) != None
   authorized_key:
-      user: "{{ username }}"
-      key: "{{ github_public_keys_url }}"
-      exclusive: yes
-      state: present
+    user: "{{ username }}"
+    key: "{{ github_public_keys_url }}"
+    exclusive: yes
+    state: present
