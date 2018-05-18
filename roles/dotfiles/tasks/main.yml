@@ -7,3 +7,8 @@
     accept_hostkey: yes
     clone: yes
     update: yes
+
+- name: Link dotfiles
+  shell: "/home/{{ username }}/.dotfiles/dotfiles.sh link"
+  args:
+    creates: "/home/{{ username }}/.zshrc"

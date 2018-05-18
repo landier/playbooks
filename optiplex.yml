@@ -7,10 +7,12 @@
   roles:
     - { role: hostname, tags: [hostname] }
     - { role: package-upgrade, tags: [upgrade] }
-    - { role: fail2ban, tags: [fail2ban] }
-    - { role: ssh-key, tags: [ssh-key] }
-    - { role: password, tags: [password] }
     - { role: sudo, tags: [sudo] }
     - { role: common, tags: [common] }
+    - { role: fail2ban, tags: [fail2ban] }
     - { role: dell, tags: [dell] }
+    - { role: dotfiles, tags: [dotfiles] }
+    - { role: ssh-key, tags: [ssh-key] }
+    - { role: password, tags: [password] }
     - { role: zsh, tags: [zsh] }
+    - { role: prezto, tags: [prezto] }

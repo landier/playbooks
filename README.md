@@ -1,3 +1,10 @@
+# Requirements
+- sshpass:
+  - Mac OS X:
+  ```
+  brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
+  ```
+
 # Unattended Ubuntu install
 Via [Netboot](https://netboot.xyz/) or [Ubuntu ISO](https://www.ubuntu.com/download/server), trigger a seeded install using the *unattended.seed* config file.
 

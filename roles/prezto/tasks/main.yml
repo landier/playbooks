@@ -6,18 +6,3 @@
     accept_hostkey: yes
     clone: yes
     update: yes
-
-- name: Install Prezto
-  when: username|default(None) != None
-  file:
-    src: "/home/{{ username }}/.zprezto/runcoms/{{ item }}"
-    path: "/home/{{ username }}/.{{ item }}"
-    state: link
-    force: yes
-  with_items:
-    - zlogin
-    - zlogout
-    - zprofile
-    - zshenv
-    - zshrc
-    - zpreztorc
