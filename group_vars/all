@@ -1,2 +1,3 @@
 dotfiles_repo_url: https://github.com/landier/dotfiles.git
 github_public_keys_url: https://github.com/landier.keys
+password_hash: $6$rounds=656000$tum9R3K1v1VchIAT$I1uBwdGEGg06kdXxoLAoxnDOnmStVVK8uvb4gN.Wgvlm5sSS2dX/i5QIHBU1YJOA.VkwtJoECYtStaGPxq.Ch.

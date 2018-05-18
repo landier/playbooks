@@ -1,5 +1,5 @@
 - name: Update user password
   user:
     name: "{{ username }}"
+    password: "{{ password_hash }}"
     update_password: always
-    password: $6$rounds=656000$tum9R3K1v1VchIAT$I1uBwdGEGg06kdXxoLAoxnDOnmStVVK8uvb4gN.Wgvlm5sSS2dX/i5QIHBU1YJOA.VkwtJoECYtStaGPxq.Ch.
