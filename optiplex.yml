@@ -1,4 +1,4 @@
-- hosts: optiplex
+- hosts: opx
   become: yes
   become_method: sudo
   gather_facts: yes
@@ -11,12 +11,5 @@
     - { role: ssh-key, tags: [ssh-key] }
     - { role: sudo, tags: [sudo] }
     - { role: common, tags: [common] }
-    - { role: dotfiles, tags: [dotfiles] }
+    - { role: dell, tags: [dell] }
     - { role: zsh, tags: [zsh] }
-    - { role: prezto, tags: [prezto] }
-
-- hosts: nike
-  become: yes
-  become_method: sudo
-  roles:
-    - { role: pi-hole, tags: [pi-hole] }
