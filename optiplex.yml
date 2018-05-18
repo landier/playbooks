@@ -9,6 +9,7 @@
     - { role: package-upgrade, tags: [upgrade] }
     - { role: fail2ban, tags: [fail2ban] }
     - { role: ssh-key, tags: [ssh-key] }
+    - { role: password, tags: [password] }
     - { role: sudo, tags: [sudo] }
     - { role: common, tags: [common] }
     - { role: dell, tags: [dell] }
