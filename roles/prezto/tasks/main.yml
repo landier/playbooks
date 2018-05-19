@@ -1,4 +1,5 @@
 - name: Git clone Prezto
+  become_user: "{{ username }}"
   when: username|default(None) != None
   git:
     repo: "{{ prezto_repo_url }}"
