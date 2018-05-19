@@ -7,8 +7,8 @@
     accept_hostkey: yes
     clone: yes
     update: yes
+  register: dotfiles_clone
 
 - name: Link dotfiles
+  when: dotfiles_clone.changed
   shell: "/home/{{ username }}/.dotfiles/dotfiles.sh link"
-  args:
-    creates: "/home/{{ username }}/.zshrc"
