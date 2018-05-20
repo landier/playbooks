@@ -1,0 +1,10 @@
+- name: Define LOCALES environment variables
+  lineinfile:
+      dest: "/etc/environment"
+      line: "{{ item }}"
+      state: present
+      create: yes
+  with_items:
+    - export LC_ALL=en_US.UTF-8
+    - export LANG=en_US.UTF-8
+    - export LANGUAGE=en_US.UTF-8

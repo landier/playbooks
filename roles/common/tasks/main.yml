@@ -1,13 +1,2 @@
-- name: Install basic packages
-  package:
-    name: "{{ item }}"
-  with_items:
-    - git
-    - htop
-    - iftop
-    - mosh
-    - nmap
-    - nmon
-    - tmux
-    - vim
-    - wget
+- include: install.yml
+- include: config.yml
