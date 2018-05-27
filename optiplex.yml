@@ -9,7 +9,7 @@
     - { role: package-upgrade, tags: [upgrade] }
     - { role: sudo, tags: [sudo] }
     - { role: common, tags: [common] }
-    - { role: fail2ban, tags: [fail2ban] }
+    - { role: ssh-server, tags: [ssh-server] }
     - { role: dell, tags: [dell] }
     - { role: dotfiles, tags: [dotfiles] }
     - { role: ssh-key, tags: [ssh-key] }

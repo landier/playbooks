@@ -1,4 +1,0 @@
-- name: Install fail2ban
-  package:
-    name: fail2ban
-    state: latest
