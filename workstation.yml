@@ -16,6 +16,8 @@
         - htop
         - curl
         - wget
+        - xbindkeys
+        - xautomation
         # - tar
         # - unzip
         # - python
