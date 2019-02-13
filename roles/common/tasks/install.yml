@@ -9,5 +9,6 @@
     - nmon
     - perf
     - tmux
+    - tree
     - vim
     - wget
