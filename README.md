@@ -8,7 +8,7 @@
 # Unattended Ubuntu install
 Via [Netboot](https://netboot.xyz/) or [Ubuntu ISO](https://www.ubuntu.com/download/server), trigger a seeded install using the *unattended.seed* config file.
 
-# Ansibble playbooks
+# Ansible playbooks
 After OS is installed, execute following playbooks:
 
 ## optiplex.yml
