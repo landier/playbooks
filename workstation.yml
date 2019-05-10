@@ -21,6 +21,12 @@
         # - tar
         # - unzip
         # - python
+        
+    - name: Install workstation snap packages
+      snap:
+        name:
+          - code-insiders
+        classic: yes
 
     - name: Install server packages
       become: yes
