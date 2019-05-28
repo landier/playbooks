@@ -21,6 +21,8 @@
         - screen
         - terminator
         - fonts-powerline
+        - ncdu
+        - tree
 
     # - name: Install snap packages
     #   snap:
@@ -114,12 +116,31 @@
         append: yes
 
     - name: Add Nvidia repository
+      become: yes
       apt_repository:
         repo: 'ppa:graphics-drivers'
 
     - name: Install Nvidia driver
+      become: yes
       apt:
-        name: vidia-driver-430 # check latest version first: https://www.nvidia.com/object/unix.html
+        name: nvidia-driver-430 # check latest version first: https://www.nvidia.com/object/unix.html
         update_cache: yes
 
-  
+    - name: Download Dropbox
+      tags: dropbox
+      command: "wget -O /tmp/dropbox.tar.gz \"https://www.dropbox.com/download?plat=lnx.x86_64\""
+      args:
+        creates: "{{ ansible_user_dir }}/.dropbox-dist/"
+      register: download_dropbox
+    
+    - name: Extract Dropbox
+      tags: dropbox
+      unarchive:
+        src: /tmp/dropbox.tar.gz
+        dest: "{{ ansible_user_dir }}"
+      when: download_dropbox.changed
+
+    - name: "Start Dropbox"
+      tags: dropbox
+      command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
+      when: download_dropbox.changed
