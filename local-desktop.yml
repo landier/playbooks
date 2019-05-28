@@ -163,12 +163,17 @@
           Comment=Dropbox
 
     - name: Install OneDrive client
+      tags: onedrive
+      become: yes
       apt:
         name: onedrive
-      register: instlal_onedrive
+      register: install_onedrive
 
     - name: Instructions
       tags: onedrive
-      command: "echo \"OneDrive new install, please execute onedrive --synchronize"
-      when: instlal_onedrive.changed
-      
+      become: yes
+      command: systemctl --user enable onedrive && systemctl --user start onedrive
+      when: install_onedrive.changed
+
+    - name: Multiple screen Gnome workspaces
+      command: gsettings set org.gnome.mutter workspaces-only-on-primary false
