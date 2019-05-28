@@ -23,6 +23,7 @@
         - fonts-powerline
         - ncdu
         - tree
+        - krb5-user # for work
 
     # - name: Install snap packages
     #   snap:
