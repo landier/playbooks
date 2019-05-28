@@ -177,3 +177,17 @@
 
     - name: Multiple screen Gnome workspaces
       command: gsettings set org.gnome.mutter workspaces-only-on-primary false
+
+    - name: Cutomize Nautilus sidebar
+      tags: nautilus
+      lineinfile:
+        dest: "{{ ansible_user_dir }}/.config/user-dirs.dirs"
+        regexp: "^{{ item }}"
+        state: absent
+      with_items:
+        - XDG_TEMPLATES_DIR
+        - XDG_PUBLICSHARE_DIR
+        - XDG_DOCUMENTS_DIR
+        - XDG_MUSIC_DIR
+        - XDG_PICTURES_DIR
+        - XDG_VIDEOS_DIR
