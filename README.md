@@ -5,6 +5,11 @@
   brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
   ```
 
+# Local desktop
+```
+ansible-playbook local-desktop.yml -c localhost --ask-become-pass
+```
+
 # Unattended Ubuntu install
 Via [Netboot](https://netboot.xyz/) or [Ubuntu ISO](https://www.ubuntu.com/download/server), trigger a seeded install using the *unattended.seed* config file.
 
