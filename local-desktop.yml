@@ -161,3 +161,14 @@
           Name=Dropbox
           Comment[en_US]=Dropbox
           Comment=Dropbox
+
+    - name: Install OneDrive client
+      apt:
+        name: onedrive
+      register: instlal_onedrive
+
+    - name: Instructions
+      tags: onedrive
+      command: "echo \"OneDrive new install, please execute onedrive --synchronize"
+      when: instlal_onedrive.changed
+      
