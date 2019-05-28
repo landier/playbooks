@@ -140,7 +140,23 @@
         dest: "{{ ansible_user_dir }}"
       when: download_dropbox.changed
 
-    - name: "Start Dropbox"
+    - name: Start Dropbox
       tags: dropbox
       command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
       when: download_dropbox.changed
+
+    - name: Add Dropbox autostart
+      tags: dropbox
+      copy:
+        dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
+        content: |
+          [Desktop Entry]
+          Type=Application
+          Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
+          Hidden=false
+          NoDisplay=false
+          X-GNOME-Autostart-enabled=true
+          Name[en_US]=Dropbox
+          Name=Dropbox
+          Comment[en_US]=Dropbox
+          Comment=Dropbox
