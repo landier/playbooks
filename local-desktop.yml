@@ -18,6 +18,7 @@
         - wget
         - xbindkeys
         - xautomation
+        - screen
         - terminator
         - fonts-powerline
 
@@ -98,3 +99,27 @@
         - docker-ce
         - docker-ce-cli
         - containerd.io
+
+    - name: Add Docker group
+      become: yes
+      group:
+        name: docker
+        system: yes
+    
+    - name: "Add current user {{ ansible_user_id }} to group"
+      become: yes
+      user:
+        name: "{{ ansible_user_id }}"
+        groups: docker
+        append: yes
+
+    - name: Add Nvidia repository
+      apt_repository:
+        repo: 'ppa:graphics-drivers'
+
+    - name: Install Nvidia driver
+      apt:
+        name: vidia-driver-430 # check latest version first: https://www.nvidia.com/object/unix.html
+        update_cache: yes
+
+  
