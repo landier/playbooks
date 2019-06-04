@@ -26,6 +26,7 @@
         - krb5-user # for work
         - python3-venv
         - python3-pip
+        - solaar # Logitech Unify
 
     # - name: Install snap packages
     #   snap:
