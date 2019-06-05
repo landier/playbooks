@@ -1,0 +1,85 @@
+- hosts: mbox01
+
+  tasks:
+    - name: "Set hostname: {{ inventory_hostname }}"
+      become: yes
+      hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Install workstation packages
+      become: yes
+      tags: ["apt"]
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
+        force: yes
+      with_items:
+        - vim
+        - git
+        - zsh
+        - htop
+        - curl
+        - wget
+        - screen
+        - terminator
+        - ncdu
+        - tree
+        - solaar # Logitech Unify
+        - openssh-server
+
+    # - name: Install snap packages
+    #   snap:
+    #     name: "{{ item }}"
+    #     classic: yes
+    #   with_items:
+    #     - code-insiders
+    #     - chromium
+    #     - slack
+    #     - spotify
+    
+    # - name: "Git clone Prezto for current user: {{ansible_user_id }}"
+    #   git:
+    #     repo: https://github.com/sorin-ionescu/prezto.git
+    #     dest: "/home/{{ ansible_user_id }}/.zprezto"
+    
+    # - name: Install Prezto
+    #   file:
+    #     path: "/home/{{ ansible_user_id }}/.{{ item }}"
+    #     src: "/home/{{ ansible_user_id }}/.zprezto/runcoms/{{ item }}"
+    #     state: link
+    #     mode: 0644
+    #   with_items:
+    #       - zlogin
+    #       - zlogout
+    
+    # - name: "Git clone dotfiles for current user:  {{ ansible_user_id }}"
+    #   git:
+    #     repo: "{{ dotfiles_repo_url }}"
+    #     dest: "/home/{{ ansible_user_id }}/.dotfiles"
+    #     accept_hostkey: True
+    #   register: dotfiles_repo
+    
+    # - name: Symlink dotfiles
+    #   command: "/home/{{ ansible_user_id }}/.dotfiles/dotfiles.sh link"
+    #   when: dotfiles_repo.changed
+
+    # - name: Change shell to zsh
+    #   become: yes
+    #   user:
+    #     name: "{{ ansible_user_id }}"
+    #     shell: /bin/zsh
+
+    # - name: Cutomize Nautilus sidebar
+    #   tags: nautilus
+    #   lineinfile:
+    #     dest: "{{ ansible_user_dir }}/.config/user-dirs.dirs"
+    #     regexp: "^{{ item }}"
+    #     state: absent
+    #   with_items:
+    #     - XDG_TEMPLATES_DIR
+    #     - XDG_PUBLICSHARE_DIR
+    #     - XDG_DOCUMENTS_DIR
+    #     - XDG_MUSIC_DIR
+    #     - XDG_PICTURES_DIR
+    #     - XDG_VIDEOS_DIR
