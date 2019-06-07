@@ -43,3 +43,17 @@ python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_c
 # Not managed
 ## Install fonts
 https://github.com/powerline/fonts
+
+# Docker services
+
+## jellyfin
+```
+docker pull jellyfin/jellyfin
+mkdir -p $PWD/jellyfin/{cache,config}
+docker run -it \
+    --volume $PWD/jellyfin/config:/config \
+    --volume $PWD/jellyfin/cache:/cache \
+    --volume $PWD/media:/media \
+    --net=host \
+    jellyfin/jellyfin
+```
