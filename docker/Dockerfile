@@ -20,4 +20,4 @@ USER jdoe
 
 
 # CMD ["/bin/bash"]
-CMD [ "ansible-playbook", "local-desktop.yml", "-i", "inventory.ini" ]
+CMD [ "ansible-playbook", "local-desktop.yml", "-i", "inventory.ini", "--skip-tags", "ignore" ]

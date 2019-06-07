@@ -157,21 +157,23 @@
       command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
       when: download_dropbox.changed
 
-    # - name: Add Dropbox autostart
-    #   tags: dropbox
-    #   copy:
-    #     dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
-    #     content: |
-    #       [Desktop Entry]
-    #       Type=Application
-    #       Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
-    #       Hidden=false
-    #       NoDisplay=false
-    #       X-GNOME-Autostart-enabled=true
-    #       Name[en_US]=Dropbox
-    #       Name=Dropbox
-    #       Comment[en_US]=Dropbox
-    #       Comment=Dropbox
+    - name: Add Dropbox autostart
+      tags:
+        - dropbox
+        - ignore
+      copy:
+        dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
+        content: |
+          [Desktop Entry]
+          Type=Application
+          Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
+          Hidden=false
+          NoDisplay=false
+          X-GNOME-Autostart-enabled=true
+          Name[en_US]=Dropbox
+          Name=Dropbox
+          Comment[en_US]=Dropbox
+          Comment=Dropbox
 
     - name: Install OneDrive client
       tags: onedrive
@@ -181,7 +183,9 @@
       register: install_onedrive
 
     - name: "Instructions, documentation: https://github.com/abraunegg/onedrive"
-      tags: onedrive
+      tags:
+        - onedrive
+        - ignore
       become: yes
       command: systemctl --user enable onedrive && systemctl --user start onedrive
       when: install_onedrive.changed
@@ -190,7 +194,9 @@
       command: gsettings set org.gnome.mutter workspaces-only-on-primary false
 
     - name: Cutomize Nautilus sidebar
-      tags: nautilus
+      tags:
+        - nautilus
+        - ignore
       lineinfile:
         dest: "{{ ansible_user_dir }}/.config/user-dirs.dirs"
         regexp: "^{{ item }}"
