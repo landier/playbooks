@@ -1,4 +1,8 @@
 - hosts: localhost
+  vars:
+    - username: "{{ ansible_user }}"
+  roles:
+    - ssh-key
 
   tasks:
     - name: Install workstation packages
@@ -96,7 +100,7 @@
     - name: "Add Docker repository for {{ ansible_distribution_release }}"
       become: yes
       apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable
 
     - name: Install Docker
       become: yes
@@ -153,21 +157,21 @@
       command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
       when: download_dropbox.changed
 
-    - name: Add Dropbox autostart
-      tags: dropbox
-      copy:
-        dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
-        content: |
-          [Desktop Entry]
-          Type=Application
-          Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
-          Hidden=false
-          NoDisplay=false
-          X-GNOME-Autostart-enabled=true
-          Name[en_US]=Dropbox
-          Name=Dropbox
-          Comment[en_US]=Dropbox
-          Comment=Dropbox
+    # - name: Add Dropbox autostart
+    #   tags: dropbox
+    #   copy:
+    #     dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
+    #     content: |
+    #       [Desktop Entry]
+    #       Type=Application
+    #       Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
+    #       Hidden=false
+    #       NoDisplay=false
+    #       X-GNOME-Autostart-enabled=true
+    #       Name[en_US]=Dropbox
+    #       Name=Dropbox
+    #       Comment[en_US]=Dropbox
+    #       Comment=Dropbox
 
     - name: Install OneDrive client
       tags: onedrive
@@ -176,7 +180,7 @@
         name: onedrive
       register: install_onedrive
 
-    - name: Instructions
+    - name: "Instructions, documentation: https://github.com/abraunegg/onedrive"
       tags: onedrive
       become: yes
       command: systemctl --user enable onedrive && systemctl --user start onedrive
@@ -198,3 +202,27 @@
         - XDG_MUSIC_DIR
         - XDG_PICTURES_DIR
         - XDG_VIDEOS_DIR
+
+    # - name: Display paths of all .txt files in dir
+    #   tags: firefox
+    #   debug:
+    #     msg: "{{ lookup('fileglob', '{{ ansible_user_dir }}/.mozilla/firefox/vyi8ui1k.default/*.js') }}"
+
+    # - name: Set DNS resolver for Firefox
+    #   # tags: firefox
+    #   replace:
+    #     path: "{{ lookup('fileglob', '{{ ansible_user_dir }}/.mozilla/firefox/*/prefs2.js') }}') }}"
+    #     regexp: "^user_pref(\"{{ item.key }}\", (.*))$"
+    #     replace: "{{ item.value }}"
+    #   with_dict:
+    #     - network.trr.bootstrapAddress: 5.182.208.0
+    #     - network.trr.custom_uri: "https://dns.nextdns.io/8936ab"
+    #     - network.trr.mode: 3
+    #     - network.trr.uri: "https://dns.nextdns.io/8936ab"
+
+# ln -s ~/Dropbox/Pictures/Simple\ Desktops ~/Pictures/Wallpapers
+
+# Ruby / Chef
+# gem install bundler
+# bundle update --bundler
+# https://github.com/abraunegg/onedrive
