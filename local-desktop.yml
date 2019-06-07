@@ -30,6 +30,7 @@
         - ruby # Chef
         - ruby-dev
         - zlib1g-dev
+        - openssh-server
 
     # - name: Install snap packages
     #   snap:
