@@ -27,6 +27,9 @@
         - python3-venv
         - python3-pip
         - solaar # Logitech Unify
+        - ruby # Chef
+        - ruby-dev
+        - zlib1g-dev
 
     # - name: Install snap packages
     #   snap:
