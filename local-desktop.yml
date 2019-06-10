@@ -232,3 +232,5 @@
 # gem install bundler
 # bundle update --bundler
 # https://github.com/abraunegg/onedrive
+
+# mkdir -p ~/.gradle/init.d && curl -o ~/.gradle/init.d/criteo-init.gradle http://moab-filer.crto.in/scripts/criteo-init.gradle
