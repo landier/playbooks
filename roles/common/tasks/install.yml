@@ -7,7 +7,7 @@
     - iftop
     - nmap
     - nmon
-    - perf
+    - iperf
     - tmux
     - tree
     - vim

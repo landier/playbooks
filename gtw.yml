@@ -1,0 +1,6 @@
+- hosts: gtw01
+  become: yes
+  become_method: sudo
+  roles:
+    - { role: common, tags: [common] }
+    - { role: wifi, tags: [wifi] }
