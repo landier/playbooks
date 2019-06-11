@@ -78,6 +78,13 @@
         name: "{{ ansible_user_id }}"
         shell: /bin/zsh
 
+    - name: Add Terminator Nord theme
+      tags: nord
+      get_url:
+        dest: "{{ ansible_user_dir }}/.config/terminator/config"
+        url: https://raw.githubusercontent.com/arcticicestudio/nord-terminator/develop/src/config
+        force: yes
+
     - name: Install Docker requirements
       become: yes
       apt:
