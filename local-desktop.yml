@@ -7,7 +7,7 @@
   tasks:
     - name: Install workstation packages
       become: yes
-      tags: ["apt"]
+      tags: apt
       apt:
         name: "{{ item }}"
         update_cache: yes
@@ -24,7 +24,6 @@
         - xautomation
         - screen
         - terminator
-        - fonts-powerline
         - ncdu
         - tree
         - krb5-user # for work
@@ -35,6 +34,17 @@
         - ruby-dev
         - zlib1g-dev
         - openssh-server
+        - fonts-powerline
+
+    # - name: Remove deprecated packages
+    #   tags: apt
+    #   apt:
+    #     name: "{{ item }}"
+    #     state: absent
+    #     autoremove: yes
+    #     autoclean: yes
+    #   with_items:
+    #     - None
 
     # - name: Install snap packages
     #   snap:
@@ -81,7 +91,7 @@
     - name: Create Terminator config directory
       tags: nord
       file:
-        src: "{{ ansible_user_dir }}/.config/terminator"
+        path: "{{ ansible_user_dir }}/.config/terminator"
         state: directory
 
     - name: Add Terminator Nord theme
