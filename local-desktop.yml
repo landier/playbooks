@@ -55,11 +55,25 @@
     #     - chromium
     #     - slack
     #     - spotify
+
+    - name: Retrieve Powerline font families
+      tags: fonts
+      git:
+        repo: https://github.com/powerline/fonts.git
+        dest: /tmp/powerline-fonts
+        depth: 1
     
+    - name: Install Powerline font families
+      tags: fonts
+      shell: /tmp/powerline-fonts/install.sh
+      args:
+        creates: "/home/{{ ansible_user_id }}/.local/share/fonts"
+
     - name: "Git clone Prezto for current user: {{ansible_user_id }}"
       git:
         repo: https://github.com/sorin-ionescu/prezto.git
         dest: "/home/{{ ansible_user_id }}/.zprezto"
+        depth: 1
     
     - name: Install Prezto
       file:
@@ -257,3 +271,7 @@
 # https://github.com/abraunegg/onedrive
 
 # mkdir -p ~/.gradle/init.d && curl -o ~/.gradle/init.d/criteo-init.gradle http://moab-filer.crto.in/scripts/criteo-init.gradle
+
+## docker-compose
+# sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+# sudo chmod +x /usr/local/bin/docker-compose
