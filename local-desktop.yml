@@ -78,6 +78,12 @@
         name: "{{ ansible_user_id }}"
         shell: /bin/zsh
 
+    - name: Create Terminator config directory
+      tags: nord
+      file:
+        src: "{{ ansible_user_dir }}/.config/terminator"
+        state: directory
+
     - name: Add Terminator Nord theme
       tags: nord
       get_url:
