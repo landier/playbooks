@@ -67,33 +67,33 @@
       tags: fonts
       shell: /tmp/powerline-fonts/install.sh
       args:
-        creates: "/home/{{ ansible_user_id }}/.local/share/fonts"
+        creates: "{{ ansible_user_dir }}.local/share/fonts"
 
     - name: "Git clone Prezto for current user: {{ansible_user_id }}"
       git:
         repo: https://github.com/sorin-ionescu/prezto.git
-        dest: "/home/{{ ansible_user_id }}/.zprezto"
+        dest: "{{ ansible_user_dir }}/.zprezto"
         depth: 1
     
     - name: Install Prezto
       file:
-        path: "/home/{{ ansible_user_id }}/.{{ item }}"
-        src: "/home/{{ ansible_user_id }}/.zprezto/runcoms/{{ item }}"
+        path: "{{ ansible_user_dir }}/.{{ item }}"
+        src: "{{ ansible_user_dir }}/.zprezto/runcoms/{{ item }}"
         state: link
         mode: 0644
       with_items:
           - zlogin
           - zlogout
-    
+
     - name: "Git clone dotfiles for current user:  {{ ansible_user_id }}"
       git:
         repo: "{{ dotfiles_repo_url }}"
-        dest: "/home/{{ ansible_user_id }}/.dotfiles"
+        dest: "{{ ansible_user_dir }}/.dotfiles"
         accept_hostkey: True
       register: dotfiles_repo
     
     - name: Symlink dotfiles
-      command: "/home/{{ ansible_user_id }}/.dotfiles/dotfiles.sh link"
+      command: "{{ ansible_user_dir }}/.dotfiles/dotfiles.sh link"
       when: dotfiles_repo.changed
 
     - name: Change shell to zsh
@@ -245,6 +245,11 @@
         - XDG_MUSIC_DIR
         - XDG_PICTURES_DIR
         - XDG_VIDEOS_DIR
+
+    - name: Install Kite
+      shell: bash -c "$(wget -q -O - https://linux.kite.com/dls/linux/current)"
+      args:
+        creates: "{{ ansible_user_dir }}/.local/share/kite/"
 
     # - name: Display paths of all .txt files in dir
     #   tags: firefox
