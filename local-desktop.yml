@@ -35,6 +35,7 @@
         - zlib1g-dev
         - openssh-server
         - fonts-powerline
+        - git-review
 
     # - name: Remove deprecated packages
     #   tags: apt
