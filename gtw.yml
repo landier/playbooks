@@ -1,4 +1,4 @@
-- hosts: gtw01
+- hosts: rpi01
   become: yes
   become_method: sudo
   roles:
