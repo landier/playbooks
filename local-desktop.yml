@@ -255,11 +255,11 @@
         - XDG_PICTURES_DIR
         - XDG_VIDEOS_DIR
 
-    - name: Install Kite
-      tags: ignore
-      shell: bash -c "$(wget -q -O - https://linux.kite.com/dls/linux/current)"
-      args:
-        creates: "{{ ansible_user_dir }}/.local/share/kite/"
+          #    - name: Install Kite
+          #      tags: ignore
+          #      shell: bash -c "$(wget -q -O - https://linux.kite.com/dls/linux/current)"
+          #      args:
+          #        creates: "{{ ansible_user_dir }}/.local/share/kite/"
 
     # - name: Display paths of all .txt files in dir
     #   tags: firefox
