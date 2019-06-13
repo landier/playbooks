@@ -12,7 +12,7 @@ ansible-playbook local-desktop.yml -c localhost --ask-become-pass
 
 # Gateway
 ```
-ansible-playbook -i inventory.ini gtw.yml --ask-pass --ask-become-pass
+ansible-playbook -i inventory.ini gateway.yml --ask-pass --ask-become-pass
 ```
 
 # Home Theater PC

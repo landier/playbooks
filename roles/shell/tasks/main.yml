@@ -1,0 +1,28 @@
+- name: Install ZSH
+  become: yes
+  become_method: sudo
+  package:
+    name: zsh
+    state: latest
+    
+- name: Configure user shell to be ZSH
+  when: username|default(None) != None
+  user:
+    name: "{{ username }}"
+    shell: "{{ shell }}"
+
+- name: "Git clone Prezto for current user: {{ansible_user_id }}"
+  git:
+    repo: https://github.com/sorin-ionescu/prezto.git
+    dest: "{{ ansible_user_dir }}/.zprezto"
+    depth: 1
+    
+- name: Install Prezto
+  file:
+    path: "{{ ansible_user_dir }}/.{{ item }}"
+    src: "{{ ansible_user_dir }}/.zprezto/runcoms/{{ item }}"
+    state: link
+    mode: 0644
+  with_items:
+    - zlogin
+    - zlogout

@@ -1,4 +1,6 @@
 - name: Install basic packages
+  become: yes
+  become_method: sudo
   package:
     name: "{{ item }}"
   with_items:
@@ -12,3 +14,7 @@
     - tree
     - vim
     - wget
+    - screen
+    - curl
+    - ncdu
+    - tree

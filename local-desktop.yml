@@ -2,30 +2,24 @@
   vars:
     - username: "{{ ansible_user }}"
   roles:
+    - common
     - ssh-key
+    - docker
 
   tasks:
     - name: Install workstation packages
       become: yes
       tags: apt
-      apt:
+      package:
         name: "{{ item }}"
         update_cache: yes
         state: latest
         force: yes
       with_items:
-        - vim
-        - git
         - zsh
-        - htop
-        - curl
-        - wget
         - xbindkeys
         - xautomation
-        - screen
         - terminator
-        - ncdu
-        - tree
         - krb5-user # for work
         - python3-venv
         - python3-pip
@@ -116,62 +110,7 @@
         url: https://raw.githubusercontent.com/arcticicestudio/nord-terminator/develop/src/config
         force: yes
 
-    - name: Install Docker requirements
-      become: yes
-      apt:
-        name: "{{ item }}"
-        update_cache: yes
-        state: latest
-        force: yes
-      with_items:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - gnupg-agent
-        - software-properties-common
-
-    - name: Add Docker GPG key
-      become: yes
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-      
-    - name: "Add Docker repository for {{ ansible_distribution_release }}"
-      become: yes
-      apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable
-
-    - name: Install Docker
-      become: yes
-      apt:
-        name: "{{ item }}"
-        update_cache: yes
-        state: latest
-        force: yes
-      with_items:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
-
-    - name: Add Docker group
-      become: yes
-      group:
-        name: docker
-        system: yes
     
-    - name: "Add current user {{ ansible_user_id }} to group"
-      become: yes
-      user:
-        name: "{{ ansible_user_id }}"
-        groups: docker
-        append: yes
-
-    - name: Install docker-compose command
-      tags: docker-compose, docker
-      become: yes
-      get_url:
-        url: "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-{{ ansible_system }}-{{ ansible_userspace_architecture }}"
-        dest: /usr/local/bin/docker-compose
-        mode: 0755
 
     - name: Add Nvidia repository
       become: yes

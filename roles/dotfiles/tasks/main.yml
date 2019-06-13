@@ -1,14 +1,10 @@
-- name: Git clone dotfiles
-  when: username|default(None) != None and dotfiles_repo_url|default(None) != None
-  become_user: "{{ username }}"
+- name: "Git clone dotfiles for current user: {{ ansible_user_id }}"
   git:
     repo: "{{ dotfiles_repo_url }}"
-    dest: "/home/{{ username }}/.dotfiles"
-    accept_hostkey: yes
-    clone: yes
-    update: yes
-  register: dotfiles_clone
+    dest: "{{ ansible_user_dir }}/.dotfiles"
+    accept_hostkey: True
+  register: dotfiles_repo
 
-- name: Link dotfiles
-  when: dotfiles_clone.changed
-  shell: "/home/{{ username }}/.dotfiles/dotfiles.sh link"
+- name: Symlink dotfiles
+  command: "{{ ansible_user_dir }}/.dotfiles/dotfiles.sh link"
+  when: dotfiles_repo.changed

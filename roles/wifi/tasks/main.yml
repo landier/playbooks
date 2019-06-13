@@ -1,3 +1,5 @@
 - name: Install wicd
+  become: yes
+  become_method: sudo
   package:
-    name: wicd
+    name: wicd-curses
