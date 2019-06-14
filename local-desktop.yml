@@ -2,9 +2,9 @@
   vars:
     - username: "{{ ansible_user }}"
   roles:
-    - common
+    - { role: common, become: yes }
     - ssh-key
-    - docker
+    - { role: docker, become: yes }
 
   tasks:
     - name: Install workstation packages
