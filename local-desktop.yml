@@ -30,6 +30,7 @@
         - openssh-server
         - fonts-powerline
         - git-review
+        - ipmitool
 
     # - name: Remove deprecated packages
     #   tags: apt
