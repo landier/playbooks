@@ -112,6 +112,26 @@
 
     
 
+    - name: Add Dbeaver GPG key
+      become: yes
+      apt_key:
+        url: https://dbeaver.io/debs/dbeaver.gpg.key
+
+    - name: Add Dbeaver repository
+      become: yes
+      apt_repository:
+        repo: deb https://dbeaver.io/debs/dbeaver-ce /
+
+    - name: Install Dbeaver
+      become: yes
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
+        force: yes
+      with_items:
+        - dbeaver-ce
+
     - name: Add Nvidia repository
       become: yes
       apt_repository:
