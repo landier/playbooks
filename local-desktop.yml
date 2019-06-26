@@ -32,6 +32,7 @@
         - git-review
         - ipmitool
         - powerwake
+        - jq
 
     # - name: Remove deprecated packages
     #   tags: apt
