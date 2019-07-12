@@ -33,6 +33,7 @@
         - ipmitool
         - powerwake
         - jq
+        - tig
 
     # - name: Remove deprecated packages
     #   tags: apt
