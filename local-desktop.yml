@@ -129,12 +129,27 @@
     - name: Install Dbeaver
       become: yes
       apt:
-        name: "{{ item }}"
+        name: dbeaver-ce
         update_cache: yes
         state: latest
-        force: yes
-      with_items:
-        - dbeaver-ce
+
+    - name: Add Google Chrome GPG key
+      become: yes
+      apt_key:
+        url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+
+    - name: Add Google Chrome repository
+      become: yes
+      apt_repository:
+        repo: deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
+        filename: google-chrome
+
+    - name: Install Google Chrome
+      become: yes
+      apt:
+        name: google-chrome-beta
+        update_cache: yes
+        state: latest
 
     - name: Add Nvidia repository
       become: yes
