@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Specify Config Transpiler version
-CT_VER=v0.6.1
+CT_VER=v0.9.0
 
 # Specify Architecture
 # ARCH=aarch64 # ARM's 64-bit architecture
