@@ -33,10 +33,12 @@ chmod u+x /tmp/ct-${CT_VER}-${ARCH}-${OS}
 # curl -L ${DOWNLOAD_URL}/${CT_VER}/ct-${CT_VER}-${ARCH}-${OS}.asc -o /tmp/ct-${CT_VER}-${ARCH}-${OS}.asc
 # gpg2 --verify /tmp/ct-${CT_VER}-${ARCH}-${OS}.asc /tmp/ct-${CT_VER}-${ARCH}-${OS}
 
+rm -f /tmp/core-install
+rm -f /tmp/ignition.yml
+rm -f /tmp/ignition.json
+
 curl https://raw.githubusercontent.com/coreos/init/master/bin/coreos-install -o /tmp/coreos-install
 curl https://raw.githubusercontent.com/landier/playbooks/master/ignition.yml -o /tmp/ignition.yml
-
-rm /tmp/ignition.json
 /tmp/ct-${CT_VER}-${ARCH}-${OS} < /tmp/ignition.yml > /tmp/ignition.json
 
 chmod u+x /tmp/coreos-install
