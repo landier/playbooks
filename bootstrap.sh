@@ -39,7 +39,9 @@ rm -f /tmp/ignition.json
 
 curl https://raw.githubusercontent.com/coreos/init/master/bin/coreos-install -o /tmp/coreos-install
 curl https://raw.githubusercontent.com/landier/playbooks/master/ignition.yml -o /tmp/ignition.yml
+
 /tmp/ct-${CT_VER}-${ARCH}-${OS} < /tmp/ignition.yml > /tmp/ignition.json
+sleep 2
 
 chmod u+x /tmp/coreos-install
 
