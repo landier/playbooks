@@ -52,7 +52,7 @@ curl https://raw.githubusercontent.com/landier/playbooks/master/bootstrap.sh | s
 ```
 or
 ```
-curl http://boot.landier.net/ | sh
+curl -L http://boot.landier.net/ | sh
 ```
 
 # Not managed
