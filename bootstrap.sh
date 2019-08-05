@@ -8,9 +8,12 @@ CT_VER=v0.6.1
 ARCH=x86_64
 
 # Specify OS
-OS=apple-darwin # MacOS
+# OS=apple-darwin # MacOS
 # OS=pc-windows-gnu.exe # Windows
-# OS=unknown-linux-gnu # Linux
+OS=unknown-linux-gnu # Linux
+
+# Specify Core OS channel
+CHANNEL=beta
 
 # Specify download URL
 DOWNLOAD_URL=https://github.com/coreos/container-linux-config-transpiler/releases/download
@@ -33,11 +36,12 @@ chmod u+x /tmp/ct-${CT_VER}-${ARCH}-${OS}
 curl https://raw.githubusercontent.com/coreos/init/master/bin/coreos-install -o /tmp/coreos-install
 curl https://raw.githubusercontent.com/landier/playbooks/master/ignition.yml -o /tmp/ignition.yml
 
+rm /tmp/ignition.json
 /tmp/ct-${CT_VER}-${ARCH}-${OS} < /tmp/ignition.yml > /tmp/ignition.json
 
 chmod u+x /tmp/coreos-install
 
 /tmp/coreos-install \
     -d /dev/sda \
-    -C beta \
+    -C $CHANNEL \
     -i ignition.json
