@@ -49,3 +49,7 @@ chmod u+x /tmp/coreos-install
     -d /dev/sda \
     -C $CHANNEL \
     -i ignition.json
+
+echo Done
+echo -n "Press [ENTER] to continue."
+reboot
