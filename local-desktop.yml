@@ -36,6 +36,7 @@
         - tig
         - iperf3
         - sipcalc
+        - ack
 
     # - name: Remove deprecated packages
     #   tags: apt
