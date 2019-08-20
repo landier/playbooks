@@ -1,4 +1,6 @@
 - name: Define LOCALES environment variables
+  become: yes
+  become_method: sudo
   lineinfile:
       dest: "/etc/environment"
       line: "{{ item }}"
