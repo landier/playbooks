@@ -163,6 +163,30 @@
         name: nvidia-driver-430 # check latest version first: https://www.nvidia.com/object/unix.html
         update_cache: yes
 
+    - name: Create Kerberos conf folders for Chrome/Chromium
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0644
+        recurse: yes
+      with_items:
+        - /etc/opt/chrome/policies/managed
+        - /etc/chromium-browser/policies/managed
+
+    - name: Add Kerberos conf to Chrome/Chromium
+      copy:
+        dest: "{{ item }}"
+        mode: 0644
+        force: yes
+        content: |
+          {
+            "AuthServerWhitelist": ".hpc.criteo.prod, .hpc.criteo.preprod, .criteois.com",
+            "AuthNegotiateDelegateWhitelist": ".hpc.criteo.prod, .hpc.criteo.preprod, .criteois.com"
+          }
+      with_items:
+        - /etc/opt/chrome/policies/managed/criteo.json
+        - /etc/chromium-browser/policies/managed/criteo.json
+
     - name: Download Dropbox
       tags: dropbox
       command: "wget -O /tmp/dropbox.tar.gz \"https://www.dropbox.com/download?plat=lnx.x86_64\""
