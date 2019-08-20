@@ -1,11 +1,9 @@
-- hosts: mbox01
+- hosts: mediabox
+
+  roles:
+    - { role: hostname, tags: [hostname] }
 
   tasks:
-    - name: "Set hostname: {{ inventory_hostname }}"
-      become: yes
-      hostname:
-        name: "{{ inventory_hostname }}"
-
     - name: Install workstation packages
       become: yes
       tags: ["apt"]
