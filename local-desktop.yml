@@ -164,6 +164,7 @@
         update_cache: yes
 
     - name: Create Kerberos conf folders for Chrome/Chromium
+      become: yes
       file:
         path: "{{ item }}"
         state: directory
@@ -174,6 +175,7 @@
         - /etc/chromium-browser/policies/managed
 
     - name: Add Kerberos conf to Chrome/Chromium
+      become: yes
       copy:
         dest: "{{ item }}"
         mode: 0644
