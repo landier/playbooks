@@ -1,7 +1,0 @@
-- name: Git clone Pi-Hole
-  git:
-    repo: "{{ pihole_repo_url }}"
-    dest: "{{ pihole_local_path }}"
-    accept_hostkey: yes
-    clone: yes
-    update: yes
