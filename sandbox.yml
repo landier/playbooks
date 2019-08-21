@@ -1,0 +1,6 @@
+- hosts: sandbox
+  vars:
+    - username: "{{ ansible_user }}"
+  roles:
+    - { role: ssh-key, tags: ssh-key }
+    - { role: common, tags: common, become: yes }

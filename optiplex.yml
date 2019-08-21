@@ -1,6 +1,5 @@
 - hosts: opx
   become: yes
-  become_method: sudo
   gather_facts: yes
   vars:
     - username: "{{ ansible_user }}"
@@ -8,7 +7,7 @@
     - { role: hostname, tags: [hostname] }
     - { role: package-upgrade, tags: [upgrade] }
     - { role: sudo, tags: [sudo] }
-    - { role: common, tags: [common] }
+    - { role: common, tags: [common], become: yes }
     - { role: ssh-server, tags: [ssh-server] }
     - { role: dell, tags: [dell] }
     - { role: dotfiles, tags: [dotfiles] }
