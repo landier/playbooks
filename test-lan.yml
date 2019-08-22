@@ -1,0 +1,28 @@
+- hosts: sandbox
+  gather_facts: no
+  tasks:
+    - name: "Start test container"
+      delegate_to: localhost
+      docker_container:
+        name: "{{ inventory_hostname }}"
+        image: "{{ docker_image }}"
+        command: sleep 1d
+        state: started
+        recreate: yes
+        detach: true
+        interactive: true
+        tty: true
+    
+    - name: Install python and sudo inside the container
+      raw: apt -y update && apt install -y python3-minimal python3-urllib3 sudo
+
+- name: Import lan.yml playbook
+  import_playbook: lan.yml
+
+- hosts: sandbox
+  tasks:
+    - name: "Stop {{ inventory_hostname }} container"
+      delegate_to: localhost
+      docker_container:
+        name: "{{ inventory_hostname }}"
+        state: absent
