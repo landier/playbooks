@@ -1,3 +1,5 @@
+![Travis CI](https://api.travis-ci.com/landier/playbooks.svg?branch=master)
+
 # Install OS
 ## Core OS
 Boot on a Linux Live then, in a terminal type:

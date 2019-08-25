@@ -1,5 +1,13 @@
-build:
-	docker build -t playbooks . -f docker/Dockerfile
+.DEFAULT_GOAL := all
+.PHONY : all install lint test
 
-run:
-	docker run -it --rm --volume $$PWD:/playbooks --workdir /playbooks playbooks
+all: lint test
+
+install:
+	python3 -m pip install ansible-lint docker-py
+
+lint: install
+	-ansible-lint *.yml
+
+test:
+	ansible-playbook -i test-inventory.ini test-lan.yml
