@@ -1,0 +1,9 @@
+
+exclude_paths:
+  - workstation.yml
+parseable: true
+quiet: true
+skip_list:
+  - '403'
+use_default_rules: true
+verbosity: 1
