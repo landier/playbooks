@@ -1,7 +1,8 @@
-language: python
+dist: bionic
+language: minimal
 
 services:
   - docker
 
 script:
-  - make build && make run
+  - make
