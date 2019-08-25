@@ -6,9 +6,10 @@
       docker_container:
         name: "{{ inventory_hostname }}"
         image: "{{ docker_image }}"
-        command: sleep 1d
+        command: sleep 30m
         state: started
         recreate: yes
+        cleanup: yes
         detach: true
         interactive: true
         tty: true
