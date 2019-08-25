@@ -4,10 +4,10 @@
 all: lint test
 
 install:
-	python3 -m pip install pipx docker-py
+	python3 -m pip install ansible-lint docker-py
 
 lint: install
-	-pipx run ansible-lint *.yml
+	-ansible-lint *.yml
 
 test:
 	ansible-playbook -i test-inventory.ini test-lan.yml
