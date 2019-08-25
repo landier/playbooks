@@ -4,7 +4,7 @@
 all: lint test
 
 install:
-	python3 -m pip install --user pipx
+	python3 -m pip install pipx docker-py
 
 lint: install
 	-pipx run ansible-lint *.yml
