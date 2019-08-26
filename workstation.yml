@@ -1,5 +1,6 @@
-- hosts: all
-
+- hosts: workstation
+  vars:
+    - username: "{{ ansible_user }}"
   tasks:
     - name: Install workstation packages
       become: yes
@@ -22,11 +23,11 @@
         # - unzip
         # - python
         
-    - name: Install workstation snap packages
-      snap:
-        name:
-          - code-insiders
-        classic: yes
+    # - name: Install workstation snap packages
+    #   snap:
+    #     name:
+    #       - code-insiders
+    #     classic: yes
 
     - name: Install server packages
       become: yes
