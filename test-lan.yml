@@ -20,6 +20,9 @@
 - name: Import lan.yml playbook
   import_playbook: lan.yml
 
+- name: Idempotency check of lan.yml playbook
+  import_playbook: lan.yml
+
 - hosts: sandbox
   tasks:
     - name: "Stop {{ inventory_hostname }} container"
