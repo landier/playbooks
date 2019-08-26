@@ -26,7 +26,7 @@
         - kodi
         - solaar # Logitech Unify
         - openssh-server
-    
+
     - name: Set Kodi autostart
       file:
         dest: ~/.config/autostart/kodi.desktop
@@ -51,12 +51,12 @@
     #     - chromium
     #     - slack
     #     - spotify
-    
+
     # - name: "Git clone Prezto for current user: {{ansible_user_id }}"
     #   git:
     #     repo: https://github.com/sorin-ionescu/prezto.git
     #     dest: "/home/{{ ansible_user_id }}/.zprezto"
-    
+
     # - name: Install Prezto
     #   file:
     #     path: "/home/{{ ansible_user_id }}/.{{ item }}"
@@ -66,14 +66,14 @@
     #   with_items:
     #       - zlogin
     #       - zlogout
-    
+
     # - name: "Git clone dotfiles for current user:  {{ ansible_user_id }}"
     #   git:
     #     repo: "{{ dotfiles_repo_url }}"
     #     dest: "/home/{{ ansible_user_id }}/.dotfiles"
     #     accept_hostkey: True
     #   register: dotfiles_repo
-    
+
     # - name: Symlink dotfiles
     #   command: "/home/{{ ansible_user_id }}/.dotfiles/dotfiles.sh link"
     #   when: dotfiles_repo.changed

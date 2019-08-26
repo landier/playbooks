@@ -1,8 +1,10 @@
 - name: Git clone Prezto
+  become: yes
   become_user: "{{ username }}"
   when: username|default(None) != None
   git:
     repo: "{{ prezto_repo_url }}"
+    version: master
     dest: "/home/{{ username }}/.zprezto"
     accept_hostkey: yes
     clone: yes

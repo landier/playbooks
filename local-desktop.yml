@@ -64,21 +64,23 @@
       tags: fonts
       git:
         repo: https://github.com/powerline/fonts.git
+        version: master
         dest: /tmp/powerline-fonts
         depth: 1
-    
+
     - name: Install Powerline font families
       tags: fonts
       shell: /tmp/powerline-fonts/install.sh
       args:
         creates: "{{ ansible_user_dir }}.local/share/fonts"
 
-    - name: "Git clone Prezto for current user: {{ansible_user_id }}"
+    - name: "Git clone Prezto for current user: {{ ansible_user_id }}"
       git:
         repo: https://github.com/sorin-ionescu/prezto.git
+        version: master
         dest: "{{ ansible_user_dir }}/.zprezto"
         depth: 1
-    
+
     - name: Install Prezto
       file:
         path: "{{ ansible_user_dir }}/.{{ item }}"
@@ -92,10 +94,11 @@
     - name: "Git clone dotfiles for current user:  {{ ansible_user_id }}"
       git:
         repo: "{{ dotfiles_repo_url }}"
+        version: master
         dest: "{{ ansible_user_dir }}/.dotfiles"
         accept_hostkey: True
       register: dotfiles_repo
-    
+
     - name: Symlink dotfiles
       command: "{{ ansible_user_dir }}/.dotfiles/dotfiles.sh link"
       when: dotfiles_repo.changed
@@ -197,7 +200,7 @@
       args:
         creates: "{{ ansible_user_dir }}/.dropbox-dist/"
       register: download_dropbox
-    
+
     # - name: Extract Dropbox
     #   tags: dropbox
     #   unarchive:
@@ -240,7 +243,11 @@
         - onedrive
         - ignore
       become: yes
-      command: systemctl --user enable onedrive && systemctl --user start onedrive
+      systemd:
+        name: onedrive
+        state: started
+        enabled: yes
+        scope: user
       when: install_onedrive.changed
 
     - name: Multiple screen Gnome workspaces
