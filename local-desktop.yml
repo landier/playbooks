@@ -210,23 +210,23 @@
     #   command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
     #   when: download_dropbox.changed
 
-    - name: Add Dropbox autostart
-      tags:
-        - dropbox
-        - ignore
-      copy:
-        dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
-        content: |
-          [Desktop Entry]
-          Type=Application
-          Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
-          Hidden=false
-          NoDisplay=false
-          X-GNOME-Autostart-enabled=true
-          Name[en_US]=Dropbox
-          Name=Dropbox
-          Comment[en_US]=Dropbox
-          Comment=Dropbox
+    # - name: Add Dropbox autostart
+    #   tags:
+    #     - dropbox
+    #     - ignore
+    #   copy:
+    #     dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
+    #     content: |
+    #       [Desktop Entry]
+    #       Type=Application
+    #       Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
+    #       Hidden=false
+    #       NoDisplay=false
+    #       X-GNOME-Autostart-enabled=true
+    #       Name[en_US]=Dropbox
+    #       Name=Dropbox
+    #       Comment[en_US]=Dropbox
+    #       Comment=Dropbox
 
     - name: Install OneDrive client
       tags: onedrive
