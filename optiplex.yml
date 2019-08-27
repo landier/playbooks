@@ -13,5 +13,5 @@
     - { role: dotfiles, tags: [dotfiles] }
     - { role: ssh-key, tags: [ssh-key] }
     - { role: password, tags: [password] }
-    - { role: zsh, tags: [zsh] }
+    - { role: shell, tags: [shell] }
     - { role: prezto, tags: [prezto] }

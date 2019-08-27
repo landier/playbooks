@@ -83,7 +83,7 @@
       become_method: su
       become_user: "{{ username }}"
       git:
-          repo: "{{ dotfiles_git_repo }}"
+          repo: "{{ dotfiles_repo_url }}"
           dest: "/home/{{ username }}/.dotfiles"
           accept_hostkey: True
 
@@ -98,4 +98,4 @@
     #   become_user: "{{ username }}"
       authorized_key:
           user: "{{ username }}"
-          key: "{{ github_public_keys }}"
+          key: "{{ github_public_keys_url }}"
