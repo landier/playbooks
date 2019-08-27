@@ -1,4 +1,4 @@
-- hosts: sandbox
+- hosts: all
   gather_facts: no
   tasks:
     - name: "Start test container"
@@ -23,7 +23,7 @@
 - name: "Idempotency check of {{ playbook }} playbook"
   import_playbook: "{{ playbook }}"
 
-- hosts: sandbox
+- hosts: all
   tasks:
     - name: "Stop {{ inventory_hostname }} container"
       delegate_to: localhost
