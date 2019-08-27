@@ -4,7 +4,7 @@
 ## Core OS
 Boot on a Linux Live then, in a terminal type:
 ```
-curl https://raw.githubusercontent.com/landier/playbooks/master/bootstrap.sh | sh
+curl https://raw.githubusercontent.com/landier/playbooks/master/boot/bootstrap.sh | sh
 ```
 or
 ```
