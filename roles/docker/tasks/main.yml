@@ -16,7 +16,7 @@
   become: yes
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
-  
+
 - name: "Add Docker repository for {{ ansible_distribution_release }}"
   become: yes
   apt_repository:

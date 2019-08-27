@@ -2,9 +2,7 @@
   git:
     repo: "{{ dotfiles_repo_url }}"
     dest: "{{ ansible_user_dir }}/.dotfiles"
+    version: master
     accept_hostkey: True
-  register: dotfiles_repo
+  notify: Symlink dotfiles
 
-- name: Symlink dotfiles
-  command: "{{ ansible_user_dir }}/.dotfiles/dotfiles.sh link"
-  when: dotfiles_repo.changed

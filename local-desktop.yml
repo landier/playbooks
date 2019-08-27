@@ -1,9 +1,11 @@
-- hosts: localhost
+- hosts:
+    - localhost
+    - workstation
   vars:
     - username: "{{ ansible_user }}"
   roles:
-    - { role: common, become: yes }
-    - ssh-key
+    - { role: common, tags: common, become: yes }
+    - { role: ssh-key, tags: ssh-key }
     - { role: docker, become: yes }
 
   tasks:
@@ -62,21 +64,23 @@
       tags: fonts
       git:
         repo: https://github.com/powerline/fonts.git
+        version: master
         dest: /tmp/powerline-fonts
         depth: 1
-    
+
     - name: Install Powerline font families
       tags: fonts
       shell: /tmp/powerline-fonts/install.sh
       args:
         creates: "{{ ansible_user_dir }}.local/share/fonts"
 
-    - name: "Git clone Prezto for current user: {{ansible_user_id }}"
+    - name: "Git clone Prezto for current user: {{ ansible_user_id }}"
       git:
         repo: https://github.com/sorin-ionescu/prezto.git
+        version: master
         dest: "{{ ansible_user_dir }}/.zprezto"
         depth: 1
-    
+
     - name: Install Prezto
       file:
         path: "{{ ansible_user_dir }}/.{{ item }}"
@@ -90,10 +94,11 @@
     - name: "Git clone dotfiles for current user:  {{ ansible_user_id }}"
       git:
         repo: "{{ dotfiles_repo_url }}"
+        version: master
         dest: "{{ ansible_user_dir }}/.dotfiles"
         accept_hostkey: True
       register: dotfiles_repo
-    
+
     - name: Symlink dotfiles
       command: "{{ ansible_user_dir }}/.dotfiles/dotfiles.sh link"
       when: dotfiles_repo.changed
@@ -195,36 +200,36 @@
       args:
         creates: "{{ ansible_user_dir }}/.dropbox-dist/"
       register: download_dropbox
-    
-    - name: Extract Dropbox
-      tags: dropbox
-      unarchive:
-        src: /tmp/dropbox.tar.gz
-        dest: "{{ ansible_user_dir }}"
-      when: download_dropbox.changed
 
-    - name: Start Dropbox
-      tags: dropbox
-      command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
-      when: download_dropbox.changed
+    # - name: Extract Dropbox
+    #   tags: dropbox
+    #   unarchive:
+    #     src: /tmp/dropbox.tar.gz
+    #     dest: "{{ ansible_user_dir }}"
+    #   when: download_dropbox.changed
 
-    - name: Add Dropbox autostart
-      tags:
-        - dropbox
-        - ignore
-      copy:
-        dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
-        content: |
-          [Desktop Entry]
-          Type=Application
-          Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
-          Hidden=false
-          NoDisplay=false
-          X-GNOME-Autostart-enabled=true
-          Name[en_US]=Dropbox
-          Name=Dropbox
-          Comment[en_US]=Dropbox
-          Comment=Dropbox
+    # - name: Start Dropbox
+    #   tags: dropbox
+    #   command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
+    #   when: download_dropbox.changed
+
+    # - name: Add Dropbox autostart
+    #   tags:
+    #     - dropbox
+    #     - ignore
+    #   copy:
+    #     dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
+    #     content: |
+    #       [Desktop Entry]
+    #       Type=Application
+    #       Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
+    #       Hidden=false
+    #       NoDisplay=false
+    #       X-GNOME-Autostart-enabled=true
+    #       Name[en_US]=Dropbox
+    #       Name=Dropbox
+    #       Comment[en_US]=Dropbox
+    #       Comment=Dropbox
 
     - name: Install OneDrive client
       tags: onedrive
@@ -238,7 +243,11 @@
         - onedrive
         - ignore
       become: yes
-      command: systemctl --user enable onedrive && systemctl --user start onedrive
+      systemd:
+        name: onedrive
+        state: started
+        enabled: yes
+        scope: user
       when: install_onedrive.changed
 
     - name: Multiple screen Gnome workspaces
