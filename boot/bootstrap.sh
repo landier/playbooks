@@ -52,4 +52,4 @@ chmod u+x /tmp/coreos-install
 
 echo Done
 read -p "Press [ENTER] to continue."
-#reboot
+reboot
