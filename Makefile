@@ -12,3 +12,7 @@ lint: install
 test:
 	ansible-playbook -i inventories/test.ini test.yml -e playbook=lan.yml
 	ansible-playbook -i inventories/test.ini test.yml -e playbook=local-desktop.yml --limit workstation --skip ignore
+	ansible-playbook -i inventories/test.ini test.yml -e playbook=gateway.yml --skip ignore
+	ansible-playbook -i inventories/test.ini test.yml -e playbook=htpc.yml --skip ignore
+	ansible-playbook -i inventories/test.ini test.yml -e playbook=optiplex.yml --skip ignore
+	ansible-playbook -i inventories/test.ini test.yml -e playbook=workstation.yml --skip ignore
