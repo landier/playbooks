@@ -10,5 +10,5 @@ lint: install
 	-ansible-lint *.yml
 
 test:
-	ansible-playbook -i test-inventory.ini test-lan.yml
-	ansible-playbook -i test-inventory.ini test-workstation.yml --limit workstation --skip ignore
+	ansible-playbook -i inventories/test.ini test-lan.yml
+	ansible-playbook -i inventories/test.ini test-workstation.yml --limit workstation --skip ignore
