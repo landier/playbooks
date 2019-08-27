@@ -11,4 +11,4 @@ lint: install
 
 test:
 	ansible-playbook -i inventories/test.ini test.yml -e playbook=lan.yml
-	ansible-playbook -i inventories/test.ini test.yml -e playbook=desktop.yml --limit workstation --skip ignore
+	ansible-playbook -i inventories/test.ini test.yml -e playbook=local-desktop.yml --limit workstation --skip ignore
