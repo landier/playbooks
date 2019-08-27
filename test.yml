@@ -1,4 +1,4 @@
-- hosts: workstation
+- hosts: sandbox
   gather_facts: no
   tasks:
     - name: "Start test container"
@@ -17,13 +17,13 @@
     - name: Install python and sudo inside the container
       raw: apt -y update && apt install -y python3-minimal python3-urllib3 sudo
 
-- name: Import local-desktop.yml playbook
-  import_playbook: local-desktop.yml
+- name: "Import {{ playbook }} playbook"
+  import_playbook: "{{ playbook }}"
 
-- name: Idempotency check of local-desktop.yml playbook
-  import_playbook: local-desktop.yml
+- name: "Idempotency check of {{ playbook }} playbook"
+  import_playbook: "{{ playbook }}"
 
-- hosts: workstation
+- hosts: sandbox
   tasks:
     - name: "Stop {{ inventory_hostname }} container"
       delegate_to: localhost
