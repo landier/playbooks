@@ -1,2 +1,2 @@
 dependencies:
-  - { role: zsh }
+  - { role: shell, shell: zsh }
