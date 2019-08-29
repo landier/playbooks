@@ -4,11 +4,8 @@ services:
   - docker
 
 env:
-  - PLAYBOOK=gateway.yml
-  - PLAYBOOK=htpc.yml
   - PLAYBOOK=lan.yml
   # - PLAYBOOK=local-desktop.yml
-  - PLAYBOOK=optiplex.yml
   - PLAYBOOK=workstation.yml
 
 install:
