@@ -39,8 +39,9 @@
 
 - hosts: htpc
   roles:
-    - { role: hostname, become: yes, become_method: sudo, tags: hostname }
+    # - { role: hostname, become: yes, become_method: sudo, tags: hostname }
     - { role: common, tags: common, become: yes }
+    - { role: gui, tags: gui, become: yes }
   tasks:
     - name: Install workstation packages
       become: yes
@@ -51,7 +52,6 @@
         state: latest
         force: yes
       with_items:
-        - terminator
         - kodi
         - solaar # Logitech Unify
         - openssh-server
