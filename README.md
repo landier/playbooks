@@ -11,9 +11,6 @@ or
 curl -L http://boot.landier.net/ | sh
 ```
 
-## Ubuntu - seed-based unattended install
-Via [Netboot](https://netboot.xyz/) or [Ubuntu ISO](https://www.ubuntu.com/download/server), trigger a seeded install using the *unattended.seed* config file: https://raw.githubusercontent.com/landier/playbooks/master/unattended.seed
-
 # Provision machines
 ## Requirements
 - sshpass:
