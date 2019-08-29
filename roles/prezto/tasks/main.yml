@@ -9,3 +9,4 @@
     accept_hostkey: yes
     clone: yes
     update: yes
+    depth: 1
