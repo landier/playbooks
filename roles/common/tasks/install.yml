@@ -2,32 +2,16 @@
   package:
     name: "{{ item }}"
   with_items:
+    - curl
     - git
     - htop
     - iftop
+    - iperf
+    - ncdu
     - nmap
     - nmon
-    - iperf
+    - screen
     - tmux
     - tree
     - vim
     - wget
-    - screen
-    - curl
-    - ncdu
-    - tree
-
-- name: Upgrade all packages (CentOS / Red Hat)
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-  package:
-    name: "*"
-    state: latest
-    update_cache: yes
-
-- name: Upgrade all packages (Ubuntu / Debian)
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  package:
-    upgrade: full
-    autoclean: yes
-    autoremove: yes
-    update_cache: yes

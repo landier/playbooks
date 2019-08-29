@@ -1,5 +1,0 @@
-- name: Update user password
-  user:
-    name: "{{ username }}"
-    password: "{{ password_hash }}"
-    update_password: always

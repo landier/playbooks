@@ -1,43 +1,46 @@
-- hosts: sandbox
+- hosts:
+    - sandbox
   vars:
     - username: "{{ ansible_user }}"
   roles:
-    - { role: ssh-key, tags: ssh-key }
+    # - { role: hostname, tags: hostname }
     - { role: common, tags: common, become: yes }
+    - { role: full-upgrade, tags: upgrade, become: yes }
+    - { role: ssh-key, tags: ssh-key }
 
 - hosts: gateway
   vars:
     - username: "{{ ansible_user }}"
   roles:
+    # - { role: hostname, tags: hostname, become: yes }
     - { role: common, tags: common, become: yes }
-    - { role: wifi, tags: wifi }
+    - { role: full-upgrade, tags: upgrade, become: yes }
     - { role: ssh-key, tags: ssh-key }
-    - { role: shell, tags: shell }
+    - { role: wifi, tags: wifi, become: yes }
+    - { role: shell, tags: shell, become: yes }
     - { role: dotfiles, tags: dotfiles }
 
-- hosts: opx
+- hosts: optiplex
   become: yes
   gather_facts: yes
   vars:
     - username: "{{ ansible_user }}"
   roles:
-    - { role: hostname, tags: [hostname] }
-    - { role: package-upgrade, tags: [upgrade] }
-    - { role: sudo, tags: [sudo] }
-    - { role: common, tags: [common], become: yes }
-    - { role: ssh-server, tags: [ssh-server] }
-    - { role: dell, tags: [dell] }
-    - { role: dotfiles, tags: [dotfiles] }
-    - { role: ssh-key, tags: [ssh-key] }
-    - { role: password, tags: [password] }
-    - { role: shell, tags: [shell] }
-    - { role: prezto, tags: [prezto] }
+    # - { role: hostname, tags: hostname, become: yes }
+    - { role: common, tags: common, become: yes }
+    - { role: full-upgrade, tags: upgrade, become: yes }
+    - { role: ssh-key, tags: ssh-key }
+    - { role: sudo, tags: sudo, become: yes }
+    - { role: ssh-server, tags: ssh-server, become: yes }
+    - { role: dell, tags: dell, become: yes }
+    - { role: dotfiles, tags: dotfiles }
+    - { role: shell, tags: shell }
+    - { role: prezto, tags: prezto }
 
-- hosts: mediabox
-
+- hosts: htpc
   roles:
-    - { role: hostname, become: yes, become_method: sudo, tags: [hostname] }
-
+    - { role: hostname, become: yes, become_method: sudo, tags: hostname }
+    - { role: common, tags: common, become: yes }
   tasks:
     - name: Install workstation packages
       become: yes
@@ -48,16 +51,7 @@
         state: latest
         force: yes
       with_items:
-        - vim
-        - git
-        - zsh
-        - htop
-        - curl
-        - wget
-        - screen
         - terminator
-        - ncdu
-        - tree
         - kodi
         - solaar # Logitech Unify
         - openssh-server
