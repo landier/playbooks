@@ -1,4 +1,5 @@
 PLAYBOOK = lan.yml
+TAGS = none
 
 .DEFAULT_GOAL := all
 .PHONY : all install lint test
@@ -12,4 +13,4 @@ lint:
 	-ansible-lint $(PLAYBOOK)
 
 test:
-	ansible-playbook -i inventories/test.ini test.yml -e playbook=$(PLAYBOOK) --skip ignore
+	ansible-playbook -i inventories/test.ini test.yml -e playbook=$(PLAYBOOK) --skip ignore --tags $(TAGS)

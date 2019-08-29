@@ -42,35 +42,17 @@
     # - { role: hostname, become: yes, become_method: sudo, tags: hostname }
     - { role: common, tags: common, become: yes }
     - { role: gui, tags: gui, become: yes }
+    - { role: kodi, tags: kodi, become: yes }
   tasks:
     - name: Install workstation packages
       become: yes
       tags: ["apt"]
       apt:
         name: "{{ item }}"
-        update_cache: yes
-        state: latest
-        force: yes
       with_items:
-        - kodi
         - solaar # Logitech Unify
         - openssh-server
-
-    - name: Set Kodi autostart
-      file:
-        dest: ~/.config/autostart/kodi.desktop
-        content: >
-          [Desktop Entry]
-          Type=Application
-          Exec=/usr/bin/kodi
-          Hidden=false
-          NoDisplay=false
-          X-GNOME-Autostart-enabled=true
-          Name[en_US]=Kodi
-          Name=Kodi
-          Comment[en_US]=Kodi
-          Comment=Kodi
-
+  
     # - name: Install snap packages
     #   snap:
     #     name: "{{ item }}"
