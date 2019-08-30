@@ -52,7 +52,7 @@
       with_items:
         - solaar # Logitech Unify
         - openssh-server
-  
+
     # - name: Install snap packages
     #   snap:
     #     name: "{{ item }}"
