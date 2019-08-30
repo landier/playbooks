@@ -13,4 +13,4 @@ lint:
 	-ansible-lint $(PLAYBOOK)
 
 test:
-	ansible-playbook -i inventories/test.ini test.yml -e playbook=$(PLAYBOOK) --skip ignore --tags $(TAGS)
+	ansible-playbook -i inventories/test.ini test.yml -e playbook=$(PLAYBOOK) --skip ignore --tags test-wrapper,$(TAGS)

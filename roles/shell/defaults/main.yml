@@ -1,2 +1,2 @@
 username:
-shell: /bin/zsh
+shell: { pkg: zsh, bin: /bin/zsh }  
