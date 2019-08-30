@@ -1,9 +1,0 @@
-- hosts: gateway
-  vars:
-    - username: "{{ ansible_user }}"
-  roles:
-    - { role: common, tags: common, become: yes }
-    - { role: wifi, tags: wifi }
-    - { role: ssh-key, tags: ssh-key }
-    - { role: shell, tags: shell }
-    - { role: dotfiles, tags: dotfiles }

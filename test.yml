@@ -1,5 +1,6 @@
 - hosts: all
   gather_facts: no
+  tags: test-wrapper
   tasks:
     - name: "Start test container"
       delegate_to: localhost
@@ -24,6 +25,7 @@
   import_playbook: "{{ playbook }}"
 
 - hosts: all
+  tags: test-wrapper
   tasks:
     - name: "Stop {{ inventory_hostname }} container"
       delegate_to: localhost

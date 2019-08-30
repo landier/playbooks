@@ -24,23 +24,7 @@ curl -L http://boot.landier.net/ | sh
 ansible-playbook local-desktop.yml -c localhost --ask-become-pass
 ```
 
-## Gateway
+## LAN
 ```
-ansible-playbook -i inventory.ini gateway.yml --ask-pass --ask-become-pass
-```
-
-## HTPC
-```
-ansible-playbook -i inventory.ini htpc.yml --ask-pass --ask-become-pass
-```
-
-## Optiplex
-### First run - no SSH key deployed yet
-```
-ansible-playbook -i inventory.ini optiplex.yml --ask-pass --ask-become-pass
-```
-
-### Following runs
-```
-ansible-playbook -i inventory.ini optiplex.yml
+ansible-playbook -i inventory.ini lan.yml
 ```
