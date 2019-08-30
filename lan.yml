@@ -1,4 +1,5 @@
-- hosts:
+- name: LAN playbook
+  hosts:
     - sandbox
   vars:
     - username: "{{ ansible_user }}"
