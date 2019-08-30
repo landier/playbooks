@@ -5,8 +5,7 @@ services:
 
 env:
   - PLAYBOOK=lan.yml
-  # - PLAYBOOK=local-desktop.yml
-  - PLAYBOOK=workstation.yml
+  - PLAYBOOK=local.yml
 
 install:
   - make install

@@ -18,6 +18,15 @@
     - name: Install python and sudo inside the container
       raw: apt -y update && apt install -y python3-minimal python3-urllib3 sudo
 
+    - name: "Create {{ ansible_user }} user"
+      when: ansible_user is not 'root'
+      remote_user: root
+      user:
+        name: "{{ ansible_user }}"
+        uid: 1000
+        groups: sudo
+        append: yes
+
 - name: "Import {{ playbook }} playbook"
   import_playbook: "{{ playbook }}"
 
