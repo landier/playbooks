@@ -1,13 +1,12 @@
 - name: LAN playbook
   hosts:
     - sandbox
-  # remote_user: user
   roles:
     - { role: run-as, tags: common, become: yes }
     # - { role: hostname, tags: hostname }
     - { role: common, tags: common, become: yes }
     - { role: full-upgrade, tags: upgrade, become: yes }
-    - { role: ssh-key, tags: ssh-key }
+    # - { role: ssh-key, tags: ssh-key }
 
 - hosts: gateway
   vars:
@@ -16,7 +15,7 @@
     # - { role: hostname, tags: hostname, become: yes }
     - { role: common, tags: common, become: yes }
     - { role: full-upgrade, tags: upgrade, become: yes }
-    - { role: ssh-key, tags: ssh-key }
+    # - { role: ssh-key, tags: ssh-key }
     - { role: wifi, tags: wifi, become: yes }
     - { role: shell, tags: shell, become: yes }
     - { role: dotfiles, tags: dotfiles }
@@ -30,7 +29,7 @@
     # - { role: hostname, tags: hostname, become: yes }
     - { role: common, tags: common, become: yes }
     - { role: full-upgrade, tags: upgrade, become: yes }
-    - { role: ssh-key, tags: ssh-key }
+    # - { role: ssh-key, tags: ssh-key }
     - { role: sudo, tags: sudo, become: yes }
     - { role: ssh-server, tags: ssh-server, become: yes }
     - { role: dell, tags: dell, become: yes }
