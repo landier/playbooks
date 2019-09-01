@@ -1,11 +1,11 @@
-- name: "Install {{ shell.pkg }}"
+- name: Install shell
   become: yes
   become_method: sudo
   package:
     name: "{{ shell.pkg }}"
 
-- name: "Configure {{ username }}'s shell to be {{ shell.bin }}"
-  when: username|default(None) != None
+- name: Configure user's shell
+  when: user|default(None) != None
   user:
-    name: "{{ username }}"
+    name: "{{ user }}"
     shell: "{{ shell.bin }}"
