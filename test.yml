@@ -16,51 +16,30 @@
         interactive: true
         tty: true
 
-- name: Test playbook
-  hosts: all
-  remote_user: root
-  gather_facts: no
-  tags: test-wrapper
-  tasks:
-    # - name: "Start test container"
-    #   delegate_to: localhost
-    #   docker_container:
-    #     name: "{{ inventory_hostname }}"
-    #     image: "{{ docker_image }}"
-    #     command: sleep 30m
-    #     state: started
-    #     recreate: yes
-    #     cleanup: yes
-    #     detach: true
-    #     interactive: true
-    #     tty: true
-
     - name: Install python and sudo inside the container
-      remote_user: root
-      vars:
-        - ansible_user: root
       raw: apt -y update && apt install -y python3-minimal python3-urllib3 sudo
 
-    # - name: Create sudo group
-    #   when: user is defined
-    #   group:
-    #     name: sudo
-    #     system: yes
+    - name: Create sudo group
+      when: user is defined
+      group:
+        name: sudo
+        system: yes
 
-    - name: "Create {{ ansible_user }} user"
-      remote_user: root
-      # vars:
-      #   - ansible_user: root
+    - name: "Create user"
+      when: user is defined
       user:
-        name: "{{ ansible_user }}"
+        name: "{{ user }}"
         uid: 1000
         groups: adm,sudo
         append: yes
 
-    # - name: "Switch to {{ ansible_user }} user"
-    #   when: user != 'root'
-    #   set_fact:
-    #     ansible_user: "{{ user }}"
+    - name: No password prompt for sudo group
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: '^%sudo.*'
+        line: '%sudo ALL=(ALL:ALL) NOPASSWD:ALL'
+        state: present
+        validate: 'visudo -cf %s'
 
 - name: "Import {{ playbook }} playbook"
   import_playbook: "{{ playbook }}"

@@ -1,9 +1,9 @@
 - name: LAN playbook
   hosts:
     - sandbox
-  vars:
-    - username: "{{ ansible_user }}"
+  # remote_user: user
   roles:
+    - { role: run-as, tags: common, become: yes }
     # - { role: hostname, tags: hostname }
     - { role: common, tags: common, become: yes }
     - { role: full-upgrade, tags: upgrade, become: yes }

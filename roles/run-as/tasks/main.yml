@@ -1,0 +1,6 @@
+- name: "Set user for playbook"
+  when: user is defined and user != 'root'
+  set_fact:
+    ansible_user: "{{ item }}"
+  with_items:
+    - "{{ user }}"
