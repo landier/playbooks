@@ -35,7 +35,7 @@
     - { role: dell, tags: dell, become: yes }
     - { role: dotfiles, tags: dotfiles }
     - { role: shell, tags: shell }
-    - { role: prezto, tags: prezto }
+    # - { role: prezto, tags: prezto }
 
 - hosts: htpc
   roles:
