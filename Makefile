@@ -1,6 +1,7 @@
 PLAYBOOK = lan.yml
 TAGS = all
 LIMIT = all
+OPTS =
 
 .DEFAULT_GOAL := all
 .PHONY : all install lint test
@@ -14,4 +15,4 @@ lint:
 	-ansible-lint $(PLAYBOOK)
 
 test:
-	ansible-playbook -i inventories/test.ini test.yml -e playbook=$(PLAYBOOK) --limit $(LIMIT) --tags test-wrapper,$(TAGS) --skip-tags ignore
+	ansible-playbook -i inventories/test.ini test.yml -e playbook=$(PLAYBOOK) --limit $(LIMIT) --tags test-wrapper,$(TAGS) --skip-tags ignore $(OPTS)

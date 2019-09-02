@@ -1,6 +1,6 @@
-- name: "Add {{ username }} user to sudo group"
+- name: Add user to sudo group
   user:
-    name: "{{ username }}"
+    name: "{{ user }}"
     groups: "{{ sudo_group }}"
     append: yes
 

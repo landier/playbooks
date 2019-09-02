@@ -1,4 +1,5 @@
-- hosts: all
+- name: Test playbook
+  hosts: all
   gather_facts: no
   tags: test-wrapper
   tasks:
@@ -17,6 +18,28 @@
 
     - name: Install python and sudo inside the container
       raw: apt -y update && apt install -y python3-minimal python3-urllib3 sudo
+
+    - name: Create sudo group
+      when: user is defined
+      group:
+        name: sudo
+        system: yes
+
+    - name: "Create user"
+      when: user is defined
+      user:
+        name: "{{ user }}"
+        uid: 1000
+        groups: adm,sudo
+        append: yes
+
+    - name: No password prompt for sudo group
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: '^%sudo.*'
+        line: '%sudo ALL=(ALL:ALL) NOPASSWD:ALL'
+        state: present
+        validate: 'visudo -cf %s'
 
 - name: "Import {{ playbook }} playbook"
   import_playbook: "{{ playbook }}"

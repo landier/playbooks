@@ -28,3 +28,9 @@ ansible-playbook local-desktop.yml -c localhost --ask-become-pass
 ```
 ansible-playbook -i inventory.ini lan.yml
 ```
+
+# Dev
+## Local testing
+```
+make test [PLAYBOOK=lan.yml] [LIMIT=workstation] [TAGS=all] [OPTS=-vvvv]
+```
