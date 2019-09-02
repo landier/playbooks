@@ -1,3 +1,5 @@
+ansible_python_interpreter: /usr/bin/python3
+
 username: nlandier
 dotfiles_repo_url: https://github.com/landier/dotfiles.git
 #dotfiles_repo_url: git@github.com:landier/dotfiles.git
