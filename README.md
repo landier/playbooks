@@ -1,4 +1,4 @@
-![Travis CI](https://api.travis-ci.com/landier/playbooks.svg?branch=master)
+[![Build Status](https://travis-ci.com/landier/playbooks.svg?branch=master)](https://travis-ci.com/landier/playbooks)
 
 # Install OS
 ## Core OS
