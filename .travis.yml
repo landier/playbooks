@@ -8,7 +8,7 @@ env:
   - PLAYBOOK=local.yml
 
 install:
-  - make install PLAYBOOK=$PLAYBOOK
+  - make install
 
 script:
-  - make
+  - make PLAYBOOK=$PLAYBOOK
