@@ -1,7 +1,7 @@
 PLAYBOOK = lan.yml
 TAGS = all
 LIMIT = all
-OPTS =
+OPTS = -vvvv
 
 .DEFAULT_GOAL := all
 .PHONY : all install lint test
