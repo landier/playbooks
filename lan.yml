@@ -41,7 +41,7 @@
   roles:
     # - { role: hostname, become: yes, become_method: sudo, tags: hostname }
     - { role: common, tags: common, become: yes }
-    - { role: gui, tags: gui, become: yes }
+#     - { role: gui, tags: gui, become: yes }
     - { role: kodi, tags: kodi, become: yes }
   tasks:
     - name: Install workstation packages
