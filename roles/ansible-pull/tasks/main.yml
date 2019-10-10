@@ -1,0 +1,17 @@
+- name: Install cron
+  package:
+    name: cron
+
+- name: Install git
+  package:
+    name: git
+
+- name: Install ansible
+  package:
+    name: ansible
+
+- name: Create crontab for ansible-pull
+  cron:
+    name: "ansible-pull"
+    special_time: daily
+    job: "ansible-pull --url {{ repo_url }} -e \"ansible_python_interpreter=/usr/bin/python3\" {{ playbook }}"

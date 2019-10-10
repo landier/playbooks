@@ -6,6 +6,7 @@
     # - { role: hostname, tags: hostname }
     - { role: common, tags: common, become: yes }
     - { role: full-upgrade, tags: upgrade, become: yes }
+    - { role: ansible-pull, playbook: lan.yml, tags: pull, become: yes }
     # - { role: ssh-key, tags: ssh-key }
 
 - hosts: gateway
