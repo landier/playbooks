@@ -27,7 +27,7 @@
         name: sudo
         system: yes
 
-    - name: "Create user"
+    - name: Create user
       when: user is defined
       user:
         name: "{{ user }}"
