@@ -21,7 +21,7 @@ curl -L http://boot.landier.net/ | sh
 
 ## Workstation - locally
 ```
-ansible-playbook local-desktop.yml -c localhost --ask-become-pass
+ansible-playbook local.yml -c localhost --ask-become-pass
 ```
 
 ## LAN
