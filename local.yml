@@ -158,11 +158,13 @@
         state: latest
 
     - name: Add Nvidia repository
+      tags: driver
       become: yes
       apt_repository:
         repo: 'ppa:graphics-drivers'
 
     - name: Install Nvidia driver
+      tags: driver
       become: yes
       apt:
         name: nvidia-driver-430 # check latest version first: https://www.nvidia.com/object/unix.html
