@@ -39,6 +39,7 @@
         - iperf3
         - sipcalc
         - ack
+        - gimp
 
     # - name: Remove deprecated packages
     #   tags: apt
