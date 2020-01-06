@@ -168,7 +168,7 @@
       tags: driver
       become: yes
       apt:
-        name: nvidia-driver-430 # check latest version first: https://www.nvidia.com/object/unix.html
+        name: nvidia-driver-440 # check latest version first: https://www.nvidia.com/object/unix.html
         update_cache: yes
 
     - name: Create Kerberos conf folders for Chrome/Chromium
