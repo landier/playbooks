@@ -14,7 +14,6 @@
         name: "{{ item }}"
         update_cache: yes
         state: latest
-        force: yes
       with_items:
         - zsh
 #        - xbindkeys
