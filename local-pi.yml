@@ -1,0 +1,105 @@
+- hosts:
+    - localhost
+  vars:
+    - username: "{{ ansible_user }}"
+  roles:
+    - { role: common, tags: common, become: yes }
+    - { role: ssh-key, tags: ssh-key }
+
+  tasks:
+    - name: Install workstation packages
+      become: yes
+      tags: apt
+      package:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
+        force: yes
+      with_items:
+        - zsh
+#        - xbindkeys
+#        - xautomation
+        - terminator
+#        - python3-venv
+#        - python3-pip
+        - solaar # Logitech Unify
+#        - ruby # Chef
+#        - ruby-dev
+#        - zlib1g-dev
+#        - openssh-server
+#        - fonts-powerline
+#        - git-review
+#        - powerwake
+        - jq
+        - tig
+        - iperf3
+        - sipcalc
+        - ack
+#        - gimp
+
+    - name: Retrieve Powerline font families
+      tags: fonts
+      git:
+        repo: https://github.com/powerline/fonts.git
+        version: master
+        dest: /tmp/powerline-fonts
+        depth: 1
+
+    - name: Install Powerline font families
+      tags: fonts
+      shell: /tmp/powerline-fonts/install.sh
+      args:
+        creates: "{{ ansible_user_dir }}.local/share/fonts"
+
+    - name: "Git clone Prezto for current user: {{ ansible_user_id }}"
+      git:
+        repo: https://github.com/sorin-ionescu/prezto.git
+        version: master
+        dest: "{{ ansible_user_dir }}/.zprezto"
+        depth: 1
+
+    - name: Install Prezto
+      file:
+        path: "{{ ansible_user_dir }}/.{{ item }}"
+        src: "{{ ansible_user_dir }}/.zprezto/runcoms/{{ item }}"
+        state: link
+        mode: 0644
+      with_items:
+          - zlogin
+          - zlogout
+
+    - name: "Git clone dotfiles for current user:  {{ ansible_user_id }}"
+      git:
+        repo: "{{ dotfiles_repo_url }}"
+        version: master
+        dest: "{{ ansible_user_dir }}/.dotfiles"
+        accept_hostkey: True
+      register: dotfiles_repo
+
+    - name: Symlink dotfiles
+      command: "{{ ansible_user_dir }}/.dotfiles/dotfiles.sh link"
+      when: dotfiles_repo.changed
+
+    - name: Change shell to zsh
+      become: yes
+      user:
+        name: "{{ ansible_user_id }}"
+        shell: /bin/zsh
+
+    - name: Create Terminator config directory
+      tags: nord
+      file:
+        path: "{{ ansible_user_dir }}/.config/terminator"
+        state: directory
+
+    - name: Add Terminator Nord theme
+      tags: nord
+      get_url:
+        dest: "{{ ansible_user_dir }}/.config/terminator/config"
+        url: https://raw.githubusercontent.com/arcticicestudio/nord-terminator/develop/src/config
+        force: yes
+
+    - name: Add Dbeaver GPG key
+      become: yes
+      apt_key:
+        url: https://dbeaver.io/debs/dbeaver.gpg.key
