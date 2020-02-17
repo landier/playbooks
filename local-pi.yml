@@ -97,8 +97,3 @@
         dest: "{{ ansible_user_dir }}/.config/terminator/config"
         url: https://raw.githubusercontent.com/arcticicestudio/nord-terminator/develop/src/config
         force: yes
-
-    - name: Add Dbeaver GPG key
-      become: yes
-      apt_key:
-        url: https://dbeaver.io/debs/dbeaver.gpg.key
