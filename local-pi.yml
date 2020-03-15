@@ -19,7 +19,7 @@
         - tar
 #        - xbindkeys
 #        - xautomation
-        - terminator
+#        - terminator
 #        - python3-venv
 #        - python3-pip
 #        - solaar # Logitech Unify
