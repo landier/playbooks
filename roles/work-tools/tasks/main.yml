@@ -1,0 +1,13 @@
+- name: Install workstation packages
+  package:
+    name: "{{ item }}"
+    with_items:
+        - krb5-user # for work
+        #- python3-venv
+        - ruby # Chef
+        - ruby-dev
+        #- zlib1g-dev
+    
+        #- fonts-powerline
+        - ipmitool
+    

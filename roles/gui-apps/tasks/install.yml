@@ -3,3 +3,4 @@
     name: "{{ item }}"
   with_items:
     - terminator
+    - gimp

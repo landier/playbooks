@@ -2,17 +2,27 @@
   package:
     name: "{{ item }}"
   with_items:
+    - ack
     - curl
-    - git
+    - fzf
     - htop
     - iftop
-    - iperf
+    - iperf3
+    - jq
+    - mosh
     - ncdu
     - nmap
     - nmon
+    - sipcalc
     - tmux
     - tree
     - vim
     - wget
-    - mosh
-    - fzf
+
+- name: Install Git tools
+  package:
+    name: "{{ item }}"
+  with_items:
+    - git
+    - tig
+    - git-review

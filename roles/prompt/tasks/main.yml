@@ -1,0 +1,51 @@
+- name: Change shell to zsh
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
+
+- name: Retrieve Powerline font families
+  tags: fonts
+  git:
+    repo: https://github.com/powerline/fonts.git
+    version: master
+    dest: /tmp/powerline-fonts
+    depth: 1
+
+- name: Install Powerline font families
+  tags: fonts
+  shell: /tmp/powerline-fonts/install.sh
+  args:
+    creates: "{{ ansible_user_dir }}.local/share/fonts"
+  
+- name: "Git clone Prezto for current user: {{ ansible_user_id }}"
+  tags: prezto
+  git:
+    repo: https://github.com/sorin-ionescu/prezto.git
+    version: master
+    dest: "{{ ansible_user_dir }}/.zprezto"
+    depth: 1
+
+- name: Install Prezto
+  tags: prezto
+  file:
+    path: "{{ ansible_user_dir }}/.{{ item }}"
+    src: "{{ ansible_user_dir }}/.zprezto/runcoms/{{ item }}"
+    state: link
+    mode: 0644
+  with_items:
+      - zlogin
+      - zlogout
+  
+- name: "Git clone dotfiles for current user:  {{ ansible_user_id }}"
+  tags: dotfiles
+  git:
+    repo: "{{ dotfiles_repo_url }}"
+    version: master
+    dest: "{{ ansible_user_dir }}/.dotfiles"
+    accept_hostkey: True
+  register: dotfiles_repo
+
+- name: Symlink dotfiles
+  tags: dotfiles
+  command: "{{ ansible_user_dir }}/.dotfiles/dotfiles.sh link"
+  when: dotfiles_repo.changed

@@ -1,3 +1,4 @@
 - name: Set hostname
+  when: inventory_hostname != "localhost"
   hostname:
     name: "{{ inventory_hostname }}"

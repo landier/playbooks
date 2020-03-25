@@ -4,53 +4,20 @@
   vars:
     - username: "{{ ansible_user }}"
   roles:
+    - { role: hostname, tags: hostname, become: yes }
     - { role: common, tags: common, become: yes }
+    - { role: python, tags: python }
+    - { role: ssh-server, tags: ssh, become: yes }
     - { role: ssh-key, tags: ssh-key }
-    - { role: docker, become: yes }
+    - { role: shell, tags: shell }
+    - { role: gui-apps, tags: gui, become: yes }
+    - { role: keyboard-mouse, tags: [keyboard, mouse], become: yes }
+    - { role: prompt, tags: prompt}
+    # - { role: docker, tags: docker, become: yes }
+    # - { role: work-tools, tags: work, become: yes }
+    # - { role: user/dropbox }
 
   tasks:
-    - name: Install workstation packages
-      become: yes
-      tags: apt
-      package:
-        name: "{{ item }}"
-        update_cache: yes
-        state: latest
-        force: yes
-      with_items:
-        - zsh
-        - xbindkeys
-        - xautomation
-        - terminator
-        - krb5-user # for work
-        - python3-venv
-        - python3-pip
-        - solaar # Logitech Unify
-        - ruby # Chef
-        - ruby-dev
-        - zlib1g-dev
-        - openssh-server
-        - fonts-powerline
-        - git-review
-        - ipmitool
-        - powerwake
-        - jq
-        - tig
-        - iperf3
-        - sipcalc
-        - ack
-        - gimp
-
-    # - name: Remove deprecated packages
-    #   tags: apt
-    #   apt:
-    #     name: "{{ item }}"
-    #     state: absent
-    #     autoremove: yes
-    #     autoclean: yes
-    #   with_items:
-    #     - None
-
     # - name: Install snap packages
     #   snap:
     #     name: "{{ item }}"
@@ -61,216 +28,117 @@
     #     - slack
     #     - spotify
 
-    - name: Retrieve Powerline font families
-      tags: fonts
-      git:
-        repo: https://github.com/powerline/fonts.git
-        version: master
-        dest: /tmp/powerline-fonts
-        depth: 1
+    # - name: Add Dbeaver GPG key
+    #   become: yes
+    #   apt_key:
+    #     url: https://dbeaver.io/debs/dbeaver.gpg.key
 
-    - name: Install Powerline font families
-      tags: fonts
-      shell: /tmp/powerline-fonts/install.sh
-      args:
-        creates: "{{ ansible_user_dir }}.local/share/fonts"
+    # - name: Add Dbeaver repository
+    #   become: yes
+    #   apt_repository:
+    #     repo: deb https://dbeaver.io/debs/dbeaver-ce /
 
-    - name: "Git clone Prezto for current user: {{ ansible_user_id }}"
-      git:
-        repo: https://github.com/sorin-ionescu/prezto.git
-        version: master
-        dest: "{{ ansible_user_dir }}/.zprezto"
-        depth: 1
+    # - name: Install Dbeaver
+    #   become: yes
+    #   apt:
+    #     name: dbeaver-ce
+    #     update_cache: yes
+    #     state: latest
 
-    - name: Install Prezto
-      file:
-        path: "{{ ansible_user_dir }}/.{{ item }}"
-        src: "{{ ansible_user_dir }}/.zprezto/runcoms/{{ item }}"
-        state: link
-        mode: 0644
-      with_items:
-          - zlogin
-          - zlogout
+    # - name: Add Google Chrome GPG key
+    #   become: yes
+    #   apt_key:
+    #     url: https://dl-ssl.google.com/linux/linux_signing_key.pub
 
-    - name: "Git clone dotfiles for current user:  {{ ansible_user_id }}"
-      git:
-        repo: "{{ dotfiles_repo_url }}"
-        version: master
-        dest: "{{ ansible_user_dir }}/.dotfiles"
-        accept_hostkey: True
-      register: dotfiles_repo
+    # - name: Add Google Chrome repository
+    #   become: yes
+    #   apt_repository:
+    #     repo: deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
+    #     filename: google-chrome
 
-    - name: Symlink dotfiles
-      command: "{{ ansible_user_dir }}/.dotfiles/dotfiles.sh link"
-      when: dotfiles_repo.changed
+    # - name: Install Google Chrome
+    #   become: yes
+    #   apt:
+    #     name: google-chrome-beta
+    #     update_cache: yes
+    #     state: latest
 
-    - name: Change shell to zsh
-      become: yes
-      user:
-        name: "{{ ansible_user_id }}"
-        shell: /bin/zsh
+    # - name: Add Nvidia repository
+    #   tags: driver
+    #   become: yes
+    #   apt_repository:
+    #     repo: 'ppa:graphics-drivers'
 
-    - name: Create Terminator config directory
-      tags: nord
-      file:
-        path: "{{ ansible_user_dir }}/.config/terminator"
-        state: directory
+    # - name: Install Nvidia driver
+    #   tags: driver
+    #   become: yes
+    #   apt:
+    #     name: nvidia-driver-440 # check latest version first: https://www.nvidia.com/object/unix.html
+    #     update_cache: yes
 
-    - name: Add Terminator Nord theme
-      tags: nord
-      get_url:
-        dest: "{{ ansible_user_dir }}/.config/terminator/config"
-        url: https://raw.githubusercontent.com/arcticicestudio/nord-terminator/develop/src/config
-        force: yes
+    # - name: Create Kerberos conf folders for Chrome/Chromium
+    #   become: yes
+    #   file:
+    #     path: "{{ item }}"
+    #     state: directory
+    #     mode: 0644
+    #     recurse: yes
+    #   with_items:
+    #     - /etc/opt/chrome/policies/managed
+    #     - /etc/chromium-browser/policies/managed
 
-    - name: Add Dbeaver GPG key
-      become: yes
-      apt_key:
-        url: https://dbeaver.io/debs/dbeaver.gpg.key
-
-    - name: Add Dbeaver repository
-      become: yes
-      apt_repository:
-        repo: deb https://dbeaver.io/debs/dbeaver-ce /
-
-    - name: Install Dbeaver
-      become: yes
-      apt:
-        name: dbeaver-ce
-        update_cache: yes
-        state: latest
-
-    - name: Add Google Chrome GPG key
-      become: yes
-      apt_key:
-        url: https://dl-ssl.google.com/linux/linux_signing_key.pub
-
-    - name: Add Google Chrome repository
-      become: yes
-      apt_repository:
-        repo: deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
-        filename: google-chrome
-
-    - name: Install Google Chrome
-      become: yes
-      apt:
-        name: google-chrome-beta
-        update_cache: yes
-        state: latest
-
-    - name: Add Nvidia repository
-      tags: driver
-      become: yes
-      apt_repository:
-        repo: 'ppa:graphics-drivers'
-
-    - name: Install Nvidia driver
-      tags: driver
-      become: yes
-      apt:
-        name: nvidia-driver-440 # check latest version first: https://www.nvidia.com/object/unix.html
-        update_cache: yes
-
-    - name: Create Kerberos conf folders for Chrome/Chromium
-      become: yes
-      file:
-        path: "{{ item }}"
-        state: directory
-        mode: 0644
-        recurse: yes
-      with_items:
-        - /etc/opt/chrome/policies/managed
-        - /etc/chromium-browser/policies/managed
-
-    - name: Add Kerberos conf to Chrome/Chromium
-      become: yes
-      copy:
-        dest: "{{ item }}"
-        mode: 0644
-        force: yes
-        content: |
-          {
-            "AuthServerWhitelist": ".hpc.criteo.prod, .hpc.criteo.preprod, .criteois.com",
-            "AuthNegotiateDelegateWhitelist": ".hpc.criteo.prod, .hpc.criteo.preprod, .criteois.com"
-          }
-      with_items:
-        - /etc/opt/chrome/policies/managed/criteo.json
-        - /etc/chromium-browser/policies/managed/criteo.json
-
-    - name: Download Dropbox
-      tags: dropbox
-      command: "wget -O /tmp/dropbox.tar.gz \"https://www.dropbox.com/download?plat=lnx.x86_64\""
-      args:
-        creates: "{{ ansible_user_dir }}/.dropbox-dist/"
-      register: download_dropbox
-
-    # - name: Extract Dropbox
-    #   tags: dropbox
-    #   unarchive:
-    #     src: /tmp/dropbox.tar.gz
-    #     dest: "{{ ansible_user_dir }}"
-    #   when: download_dropbox.changed
-
-    # - name: Start Dropbox
-    #   tags: dropbox
-    #   command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
-    #   when: download_dropbox.changed
-
-    # - name: Add Dropbox autostart
-    #   tags:
-    #     - dropbox
-    #     - ignore
+    # - name: Add Kerberos conf to Chrome/Chromium
+    #   become: yes
     #   copy:
-    #     dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
+    #     dest: "{{ item }}"
+    #     mode: 0644
+    #     force: yes
     #     content: |
-    #       [Desktop Entry]
-    #       Type=Application
-    #       Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
-    #       Hidden=false
-    #       NoDisplay=false
-    #       X-GNOME-Autostart-enabled=true
-    #       Name[en_US]=Dropbox
-    #       Name=Dropbox
-    #       Comment[en_US]=Dropbox
-    #       Comment=Dropbox
+    #       {
+    #         "AuthServerWhitelist": ".hpc.criteo.prod, .hpc.criteo.preprod, .criteois.com",
+    #         "AuthNegotiateDelegateWhitelist": ".hpc.criteo.prod, .hpc.criteo.preprod, .criteois.com"
+    #       }
+    #   with_items:
+    #     - /etc/opt/chrome/policies/managed/criteo.json
+    #     - /etc/chromium-browser/policies/managed/criteo.json
 
-    - name: Install OneDrive client
-      tags: onedrive
-      become: yes
-      apt:
-        name: onedrive
-      register: install_onedrive
+    # - name: Install OneDrive client
+    #   tags: onedrive
+    #   become: yes
+    #   apt:
+    #     name: onedrive
+    #   register: install_onedrive
 
-    - name: "Instructions, documentation: https://github.com/abraunegg/onedrive"
-      tags:
-        - onedrive
-        - ignore
-      become: yes
-      systemd:
-        name: onedrive
-        state: started
-        enabled: yes
-        scope: user
-      when: install_onedrive.changed
+    # - name: "Instructions, documentation: https://github.com/abraunegg/onedrive"
+    #   tags:
+    #     - onedrive
+    #     - ignore
+    #   become: yes
+    #   systemd:
+    #     name: onedrive
+    #     state: started
+    #     enabled: yes
+    #     scope: user
+    #   when: install_onedrive.changed
 
-    - name: Multiple screen Gnome workspaces
-      command: gsettings set org.gnome.mutter workspaces-only-on-primary false
+    # - name: Multiple screen Gnome workspaces
+    #   command: gsettings set org.gnome.mutter workspaces-only-on-primary false
 
-    - name: Cutomize Nautilus sidebar
-      tags:
-        - nautilus
-        - ignore
-      lineinfile:
-        dest: "{{ ansible_user_dir }}/.config/user-dirs.dirs"
-        regexp: "^{{ item }}"
-        state: absent
-      with_items:
-        - XDG_TEMPLATES_DIR
-        - XDG_PUBLICSHARE_DIR
-        - XDG_DOCUMENTS_DIR
-        - XDG_MUSIC_DIR
-        - XDG_PICTURES_DIR
-        - XDG_VIDEOS_DIR
+    # - name: Cutomize Nautilus sidebar
+    #   tags:
+    #     - nautilus
+    #     - ignore
+    #   lineinfile:
+    #     dest: "{{ ansible_user_dir }}/.config/user-dirs.dirs"
+    #     regexp: "^{{ item }}"
+    #     state: absent
+    #   with_items:
+    #     - XDG_TEMPLATES_DIR
+    #     - XDG_PUBLICSHARE_DIR
+    #     - XDG_DOCUMENTS_DIR
+    #     - XDG_MUSIC_DIR
+    #     - XDG_PICTURES_DIR
+    #     - XDG_VIDEOS_DIR
 
           #    - name: Install Kite
           #      tags: ignore

@@ -1,0 +1,11 @@
+- name: Install Solaar
+  package:
+    name: solaar
+
+- name: Install xautomation
+  package:
+    name: xautomation
+
+- name: Install xbindkeys
+  package:
+    name: xbindkeys

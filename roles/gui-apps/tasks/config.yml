@@ -1,0 +1,11 @@
+- name: Create Terminator config directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/terminator"
+    state: directory
+
+- name: Add Terminator Nord theme
+  tags: nord
+  get_url:
+    dest: "{{ ansible_user_dir }}/.config/terminator/config"
+    url: https://raw.githubusercontent.com/arcticicestudio/nord-terminator/develop/src/config
+    force: yes

@@ -1,9 +1,7 @@
+- name: Install openssh-server
+  package:
+    name: openssh-server
+
 - name: Install fail2ban
   package:
     name: fail2ban
-    state: latest
-
-- name: Enable unattended-upgrades
-  package:
-    name: unattended-upgrades
-    state: present

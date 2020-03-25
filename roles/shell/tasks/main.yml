@@ -1,6 +1,5 @@
 - name: Install shell
   become: yes
-  become_method: sudo
   package:
     name: "{{ shell.pkg }}"
 

@@ -1,0 +1,32 @@
+- name: Download Dropbox
+  command: "wget -O /tmp/dropbox.tar.gz \"https://www.dropbox.com/download?plat=lnx.x86_64\""
+    args:
+    creates: "{{ ansible_user_dir }}/.dropbox-dist/"
+    register: download_dropbox
+
+- name: Extract Dropbox
+  unarchive:
+    src: /tmp/dropbox.tar.gz
+    dest: "{{ ansible_user_dir }}"
+    when: download_dropbox.changed
+
+- name: Start Dropbox
+  command: "echo \"Dropbox new install, please execute {{ ansible_user_dir }}/.dropbox-dist/dropboxd\""
+    when: download_dropbox.changed
+
+- name: Add Dropbox autostart
+  tags:
+    - ignore
+  copy:
+    dest: "{{ ansible_user_dir }}/.config/autostart/dropboxd.desktop"
+    content: |
+        [Desktop Entry]
+        Type=Application
+        Exec={{ ansible_user_dir }}/.dropbox-dist/dropboxd
+        Hidden=false
+        NoDisplay=false
+        X-GNOME-Autostart-enabled=true
+        Name[en_US]=Dropbox
+        Name=Dropbox
+        Comment[en_US]=Dropbox
+        Comment=Dropbox
