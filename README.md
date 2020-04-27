@@ -1,15 +1,16 @@
 [![Build Status](https://travis-ci.com/landier/playbooks.svg?branch=master)](https://travis-ci.com/landier/playbooks)
 
 # Install OS
-## Core OS
-Boot on a Linux Live then, in a terminal type:
+## Fedora CoreOS
+Boot on a Fedora CoreOS Live then:
 ```
-curl https://raw.githubusercontent.com/landier/playbooks/master/boot/bootstrap.sh | sh
+curl -LO https://raw.githubusercontent.com/landier/playbooks/master/boot/ignition.fcc
+podman run -i --rm quay.io/coreos/fcct:release --pretty --strict < ignition.fcc > ignition.ign
+sudo coreos-installer install /dev/sda -i ignition.ign
+sudo reboot
 ```
-or
-```
-curl -L http://boot.landier.net/ | sh
-```
+
+Source: https://docs.fedoraproject.org/en-US/fedora-coreos/bare-metal/
 
 # Provision machines
 ## Requirements
