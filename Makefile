@@ -10,7 +10,8 @@ OPTS = -vvvv
 all: lint test
 
 install:
-	python3 -m pip install ansible-lint docker-py
+	python3 -m pip install ansible-lint docker
+	ansible-galaxy install -r requirements.yml
 
 lint:
 	-ansible-lint $(PLAYBOOK)
