@@ -1,0 +1,109 @@
+- hosts:
+    - ship
+  vars:
+    - username: "{{ ansible_user }}"
+    - docker_users: ["nlandier"]
+    - docker_package: docker-distribution
+  roles:
+    - { role: geerlingguy.docker, become: yes }
+  tasks:
+    - name: Get info on docker host
+      community.general.docker_host_info:
+      register: result
+
+    - name: Get info on docker host and list images
+      community.general.docker_host_info:
+        images: yes
+      register: result
+
+    - name: Get info on docker host and list images matching the filter
+      community.general.docker_host_info:
+        images: yes
+        images_filters:
+          label: "mylabel"
+      register: result
+
+    - name: Get info on docker host and verbose list images
+      community.general.docker_host_info:
+        images: yes
+        verbose_output: yes
+      register: result
+
+    - name: Get info on docker host and used disk space
+      community.general.docker_host_info:
+        disk_usage: yes
+      register: result
+
+    - ansible.builtin.debug:
+        var: result.host_info
+
+    - name: Mount download network share
+      become: true
+      ansible.posix.mount:
+        src: //nas01/download
+        path: /mnt/download
+        fstype: cifs
+        opts: username=svc-kodi,password=PASSWORD,noperm
+        state: mounted
+
+    - name: Mount video network share
+      become: true
+      ansible.posix.mount:
+        src: //nas01/video
+        path: /mnt/video
+        fstype: cifs
+        opts: username=svc-kodi,password=PASSWORD,noperm
+        state: mounted
+
+    - name: Create a data container for radarr
+      community.general.docker_container:
+        name: radarr-data
+        image: busybox
+        volumes:
+          - /config
+    
+    - name: Start radarr container
+      community.general.docker_container:
+        name: radarr
+        image: ghcr.io/linuxserver/radarr
+        env:
+          PUID: "1000"
+          PGID: "1000"
+          TZ: Europe/Paris
+          UMASK_SET: "022"
+        # user: 1000:1000
+        volumes_from:
+          - radarr-data
+        volumes:
+          - /mnt/video/Movies:/movies
+          - /mnt/download/Blackhole:/downloads
+        ports:
+          - 7878:7878
+        restart: yes
+        restart_policy: unless-stopped
+
+
+    - name: Create a data container for jackett
+      community.general.docker_container:
+        name: jackett-data
+        image: busybox
+        volumes:
+          - /config
+
+    - name: Start jackett container
+      community.general.docker_container:
+        name: jackett
+        image: ghcr.io/linuxserver/jackett
+        env:
+          PUID: "1000"
+          PGID: "1000"
+          TZ: Europe/Paris
+          AUTO_UPDATE: "true"
+          # RUN_OPTS=<run options here> #optional
+        volumes_from:
+          - jackett-data
+        volumes:
+          - /mnt/download/Blackhole:/downloads
+        ports:
+          - 9117:9117
+        restart_policy: unless-stopped
