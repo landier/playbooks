@@ -11,7 +11,9 @@ all: lint test
 
 install:
 	python3 -m pip install ansible-lint docker
-	ansible-galaxy install -r requirements.yml
+	# ansible-galaxy install -r requirements.yml
+	ansible-galaxy  collection install community.docker -p collections
+	ansible-galaxy  collection install community.general -p collections
 
 lint:
 	-ansible-lint $(PLAYBOOK)
