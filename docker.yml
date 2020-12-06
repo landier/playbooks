@@ -129,7 +129,7 @@
           - sonarr-data
         volumes:
           - "/mnt/video/TV\ Shows:/tv"
-          - /mnt/download/Blackhole:/downloads
+          - /mnt/download:/downloads
         ports:
           - 8989:8989
         restart_policy: unless-stopped
