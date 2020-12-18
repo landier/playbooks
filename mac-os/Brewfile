@@ -1,5 +1,6 @@
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-versions"
+tap "homebrew/cask-fonts"
 
 #cask "discord"
 
@@ -8,6 +9,7 @@ brew "ansible"
 brew "bat"
 brew "ctop"
 brew "diff-so-fancy"
+brew "font-fira-code"
 brew "fzf"
 brew "gh"
 brew "git"
@@ -50,4 +52,4 @@ cask "synology-drive"
 cask "visual-studio-code-insiders"
 cask "vlc"
 cask "whatsapp"
-
+cask "zoom"
