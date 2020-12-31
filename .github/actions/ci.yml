@@ -1,0 +1,13 @@
+on: [push]
+
+jobs:
+  macos:
+    name: Local test on macos
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Brewfile
+        run: brew install --bundle mac-os-x/Brewfile
