@@ -20,4 +20,4 @@ jobs:
           fetch-depth: '0'
 
       - name: Install Brewfile
-        run: brew bundle install mac-os/Brewfile
+        run: brew bundle install --file=mac-os/Brewfile
