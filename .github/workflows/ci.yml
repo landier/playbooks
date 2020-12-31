@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+    paths:
+    - 'mac-os-x/*'
 
 jobs:
   macos:
@@ -10,4 +13,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Brewfile
-        run: brew install --bundle mac-os-x/Brewfile
+        run: brew bundle install mac-os-x/Brewfile
