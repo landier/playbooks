@@ -1,10 +1,12 @@
 name: Mac OS
 
-on:
-  push:
-    paths:
-    - '.github/*'
-    - 'mac-os-x/*'
+on: [push]
+
+#on:
+#  push:
+#    paths:
+#    - '.github/*'
+#    - 'mac-os-x/*'
 
 jobs:
   macos:
