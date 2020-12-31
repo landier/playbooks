@@ -10,7 +10,7 @@ on: [push]
 
 jobs:
   macos:
-    name: Local test on macos
+    name: Install Mac OS Homebrew packages
     runs-on: macos-latest
 
     steps:
