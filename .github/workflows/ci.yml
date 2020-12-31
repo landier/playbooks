@@ -3,6 +3,7 @@ name: Mac OS
 on:
   push:
     paths:
+    - '.github/*'
     - 'mac-os-x/*'
 
 jobs:
