@@ -77,3 +77,5 @@ cask "vlc"
 cask "wireshark"
 cask "whatsapp"
 
+# 2023 updates
+cask "spectacle"
