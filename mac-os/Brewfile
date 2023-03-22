@@ -76,6 +76,8 @@ cask "whatsapp"
 
 # 2023 updates
 brew "direnv"
+brew "lulu"
+
 cask "keka"
 cask "iina"
 cask "iterm2-beta"
